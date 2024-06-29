@@ -1,0 +1,1001 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data Types and Type Conversion &#8212; Intro to Data Analysis and Plotting with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'type_conversion';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Built-in Functions and Help" href="built_in_functions.html" />
+    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Intro to Data Analysis and Plotting with Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Intro to Data Analysis and Plotting with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Types and Type Conversion</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="built_in_functions.html">Built-in Functions and Help</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="reading_tabular_data.html">Reading Tabular Data into DataFrames</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="data_frames.html">Pandas DataFrames</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftype_conversion.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/type_conversion.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Types and Type Conversion</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Types and Type Conversion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#every-value-has-a-type">Every value has a type.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-function-type-to-find-the-type-of-a-value">Use the built-in function <code class="docutils literal notranslate"><span class="pre">type</span></code> to find the type of a value.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#types-control-what-operations-or-methods-can-be-performed-on-a-given-value">Types control what operations (or methods) can be performed on a given value.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#you-can-use-the-and-operators-on-strings">You can use the “+” and “*” operators on strings.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#strings-have-a-length-but-numbers-don-t">Strings have a length (but numbers don’t).</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#must-convert-numbers-to-strings-or-vice-versa-when-operating-on-them-convert-numbers-and-strings">Must convert numbers to strings or vice versa when operating on them. {#convert-numbers-and-strings}</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#can-mix-integers-and-floats-freely-in-operations">Can mix integers and floats freely in operations.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-only-change-value-when-something-is-assigned-to-them">Variables only change value when something is assigned to them.</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="data-types-and-type-conversion">
+<h1>Data Types and Type Conversion<a class="headerlink" href="#data-types-and-type-conversion" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Explain key differences between integers and floating point numbers.</p></li>
+<li><p>Explain key differences between numbers and character strings.</p></li>
+<li><p>Use built-in functions to convert between integers, floating point numbers, and strings.</p></li>
+</ul>
+</div>
+<div class="question admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>What kinds of data do programs store?</p></li>
+<li><p>How can I convert one type to another?</p></li>
+</ul>
+</div>
+</section>
+<section id="every-value-has-a-type">
+<h1>Every value has a type.<a class="headerlink" href="#every-value-has-a-type" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Every value in a program has a specific type.</p></li>
+<li><p>Integer (<code class="docutils literal notranslate"><span class="pre">int</span></code>): represents positive or negative whole numbers like 3 or -512.</p></li>
+<li><p>Floating point number (<code class="docutils literal notranslate"><span class="pre">float</span></code>): represents real numbers like 3.14159 or -2.5.</p></li>
+<li><p>Character string (usually called “string”, <code class="docutils literal notranslate"><span class="pre">str</span></code>): text.</p>
+<ul>
+<li><p>Written in either single quotes or double quotes (as long as they match).</p></li>
+<li><p>The quote marks aren’t printed when the string is displayed.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="use-the-built-in-function-type-to-find-the-type-of-a-value">
+<h1>Use the built-in function <code class="docutils literal notranslate"><span class="pre">type</span></code> to find the type of a value.<a class="headerlink" href="#use-the-built-in-function-type-to-find-the-type-of-a-value" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Use the built-in function <code class="docutils literal notranslate"><span class="pre">type</span></code> to find out what type a value has.</p></li>
+<li><p>Works on variables as well.</p>
+<ul>
+<li><p>But remember: the <em>value</em> has the type — the <em>variable</em> is just a label.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mi">52</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">&lt;class &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitness</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">fitness</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">&lt;class &#39;str&#39;&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="types-control-what-operations-or-methods-can-be-performed-on-a-given-value">
+<h1>Types control what operations (or methods) can be performed on a given value.<a class="headerlink" href="#types-control-what-operations-or-methods-can-be-performed-on-a-given-value" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>A value’s type determines what the program can do to it.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span> <span class="o">-</span> <span class="s1">&#39;h&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-error notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-2-67f5626a1e07&gt; in &lt;module&gt;()
+----&gt; 1 print(&#39;hello&#39; - &#39;h&#39;)
+
+TypeError: unsupported operand type(s) for -: &#39;str&#39; and &#39;str&#39;
+</pre></div>
+</div>
+</section>
+<section id="you-can-use-the-and-operators-on-strings">
+<h1>You can use the “+” and “*” operators on strings.<a class="headerlink" href="#you-can-use-the-and-operators-on-strings" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>“Adding” character strings concatenates them.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;Ahmed&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="s1">&#39;Walsh&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">full_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Ahmed Walsh</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Multiplying a character string by an integer <em>N</em> creates a new string that consists of that character string repeated  <em>N</em> times.</p>
+<ul>
+<li><p>Since multiplication is repeated addition.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">==========</span>
+</pre></div>
+</div>
+</section>
+<section id="strings-have-a-length-but-numbers-don-t">
+<h1>Strings have a length (but numbers don’t).<a class="headerlink" href="#strings-have-a-length-but-numbers-don-t" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The built-in function <code class="docutils literal notranslate"><span class="pre">len</span></code> counts the number of characters in a string.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">full_name</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">11</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>But numbers don’t have a length (not even zero).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="mi">52</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-error notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-3-f769e8e8097d&gt; in &lt;module&gt;()
+----&gt; 1 print(len(52))
+
+TypeError: object of type &#39;int&#39; has no len()
+</pre></div>
+</div>
+</section>
+<section id="must-convert-numbers-to-strings-or-vice-versa-when-operating-on-them-convert-numbers-and-strings">
+<h1>Must convert numbers to strings or vice versa when operating on them. {#convert-numbers-and-strings}<a class="headerlink" href="#must-convert-numbers-to-strings-or-vice-versa-when-operating-on-them-convert-numbers-and-strings" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Cannot add numbers and strings.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-error notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-4-fe4f54a023c6&gt; in &lt;module&gt;()
+----&gt; 1 print(1 + &#39;2&#39;)
+
+TypeError: unsupported operand type(s) for +: &#39;int&#39; and &#39;str&#39;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Not allowed because it’s ambiguous: should <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">'2'</span></code> be <code class="docutils literal notranslate"><span class="pre">3</span></code> or <code class="docutils literal notranslate"><span class="pre">'12'</span></code>?</p></li>
+<li><p>Some types can be converted to other types by using the type name as a function.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">3</span>
+<span class="go">12</span>
+</pre></div>
+</div>
+</section>
+<section id="can-mix-integers-and-floats-freely-in-operations">
+<h1>Can mix integers and floats freely in operations.<a class="headerlink" href="#can-mix-integers-and-floats-freely-in-operations" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Integers and floating-point numbers can be mixed in arithmetic.</p>
+<ul>
+<li><p>Python 3 automatically converts integers to floats as needed.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;half is&#39;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;three squared is&#39;</span><span class="p">,</span> <span class="mf">3.0</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">half is 0.5</span>
+<span class="go">three squared is 9.0</span>
+</pre></div>
+</div>
+</section>
+<section id="variables-only-change-value-when-something-is-assigned-to-them">
+<h1>Variables only change value when something is assigned to them.<a class="headerlink" href="#variables-only-change-value-when-something-is-assigned-to-them" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>If we make one cell in a spreadsheet depend on another,
+and update the latter,
+the former updates automatically.</p></li>
+<li><p>This does <strong>not</strong> happen in programming languages.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">variable_one</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">variable_two</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">variable_one</span>
+<span class="n">variable_one</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;first is&#39;</span><span class="p">,</span> <span class="n">variable_one</span><span class="p">,</span> <span class="s1">&#39;and second is&#39;</span><span class="p">,</span> <span class="n">variable_two</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">first is 2 and second is 5</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The computer reads the value of <code class="docutils literal notranslate"><span class="pre">variable_one</span></code> when doing the multiplication,
+creates a new value, and assigns it to <code class="docutils literal notranslate"><span class="pre">variable_two</span></code>.</p></li>
+<li><p>Afterwards, the value of <code class="docutils literal notranslate"><span class="pre">variable_two</span></code> is set to the new value and <em>not dependent on <code class="docutils literal notranslate"><span class="pre">variable_one</span></code></em> so its value
+does not automatically change when <code class="docutils literal notranslate"><span class="pre">variable_one</span></code> changes.</p></li>
+</ul>
+<div class="challenge docutils">
+<h2 class="rubric" id="fractions">Fractions</h2>
+<p>What type of value is 3.4?
+How can you find out?</p>
+<div class="solution docutils">
+<h2 class="rubric" id="solution">Solution</h2>
+<p>It is a floating-point number (often abbreviated “float”).
+It is possible to find out by using the built-in function <code class="docutils literal notranslate"><span class="pre">type()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mf">3.4</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">&lt;class &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="automatic-type-conversion">Automatic Type Conversion</h2>
+<p>What type of value is 3.25 + 4?</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id1">Solution</h2>
+<p>It is a float:
+integers are automatically converted to floats as necessary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="mf">3.25</span> <span class="o">+</span> <span class="mi">4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">7.25 is &lt;class &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="choose-a-type">Choose a Type</h2>
+<p>What type of value (integer, floating point number, or character string)
+would you use to represent each of the following?  Try to come up with more than one good answer for each problem.  For example, in  # 1, when would counting days with a floating point variable make more sense than using an integer?</p>
+<ol class="arabic simple">
+<li><p>Number of days since the start of the year.</p></li>
+<li><p>Time elapsed from the start of the year until now in days.</p></li>
+<li><p>Serial number of a piece of lab equipment.</p></li>
+<li><p>A lab specimen’s age</p></li>
+<li><p>Current population of a city.</p></li>
+<li><p>Average population of a city over time.</p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="id2">Solution</h2>
+<p>The answers to the questions are:</p>
+<ol class="arabic simple">
+<li><p>Integer, since the number of days would lie between 1 and 365.</p></li>
+<li><p>Floating point, since fractional days are required</p></li>
+<li><p>Character string if serial number contains letters and numbers, otherwise integer if the serial number consists only of numerals</p></li>
+<li><p>This will vary! How do you define a specimen’s age? whole days since collection (integer)? date and time (string)?</p></li>
+<li><p>Choose floating point to represent population as large aggregates (eg millions), or integer to represent population in units of individuals.</p></li>
+<li><p>Floating point number, since an average is likely to have a fractional part.</p></li>
+</ol>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="division-types">Division Types</h2>
+<p>In Python 3, the <code class="docutils literal notranslate"><span class="pre">//</span></code> operator performs integer (whole-number) floor division, the <code class="docutils literal notranslate"><span class="pre">/</span></code> operator performs floating-point
+division, and the <code class="docutils literal notranslate"><span class="pre">%</span></code> (or <em>modulo</em>) operator calculates and returns the remainder from integer division:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5 // 3:&#39;</span><span class="p">,</span> <span class="mi">5</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5 / 3:&#39;</span><span class="p">,</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5 % 3:&#39;</span><span class="p">,</span> <span class="mi">5</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">5 // 3: 1</span>
+<span class="go">5 / 3: 1.6666666666666667</span>
+<span class="go">5 % 3: 2</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">num_subjects</span></code> is the number of subjects taking part in a study,
+and <code class="docutils literal notranslate"><span class="pre">num_per_survey</span></code> is the number that can take part in a single survey,
+write an expression that calculates the number of surveys needed
+to reach everyone once.</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id3">Solution</h2>
+<p>We want the minimum number of surveys that reaches everyone once, which is
+the rounded up value of <code class="docutils literal notranslate"><span class="pre">num_subjects/</span> <span class="pre">num_per_survey</span></code>. This is
+equivalent to performing a floor division with <code class="docutils literal notranslate"><span class="pre">//</span></code> and adding 1. Before
+the division we need to subtract 1 from the number of subjects to deal with
+the case where <code class="docutils literal notranslate"><span class="pre">num_subjects</span></code> is evenly divisible by <code class="docutils literal notranslate"><span class="pre">num_per_survey</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_subjects</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">num_per_survey</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">num_surveys</span> <span class="o">=</span> <span class="p">(</span><span class="n">num_subjects</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">num_per_survey</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">num_subjects</span><span class="p">,</span> <span class="s1">&#39;subjects,&#39;</span><span class="p">,</span> <span class="n">num_per_survey</span><span class="p">,</span> <span class="s1">&#39;per survey:&#39;</span><span class="p">,</span> <span class="n">num_surveys</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">600 subjects, 42 per survey: 15</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="strings-to-numbers">Strings to Numbers</h2>
+<p>Where reasonable, <code class="docutils literal notranslate"><span class="pre">float()</span></code> will convert a string to a floating point number,
+and <code class="docutils literal notranslate"><span class="pre">int()</span></code> will convert a floating point number to an integer:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;string to float:&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;3.4&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;float to int:&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mf">3.4</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">string to float: 3.4</span>
+<span class="go">float to int: 3</span>
+</pre></div>
+</div>
+<p>If the conversion doesn’t make sense, however, an error message will occur.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;string to float:&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-error notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+&lt;ipython-input-5-df3b790bf0a2&gt; in &lt;module&gt;
+----&gt; 1 print(&quot;string to float:&quot;, float(&quot;Hello world!&quot;))
+
+ValueError: could not convert string to float: &#39;Hello world!&#39;
+</pre></div>
+</div>
+<p>Given this information, what do you expect the following program to do?</p>
+<p>What does it actually do?</p>
+<p>Why do you think it does that?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;fractional string to int:&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="s2">&quot;3.4&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="id4">Solution</h2>
+<p>What do you expect this program to do? It would not be so unreasonable to expect the Python 3 <code class="docutils literal notranslate"><span class="pre">int</span></code> command to
+convert the string “3.4” to 3.4 and an additional type conversion to 3. After all, Python 3 performs a lot of other
+magic - isn’t that part of its charm?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;3.4&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ValueError                                Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-2-ec6729dfccdc&gt; in &lt;module&gt;</span>
+<span class="go">----&gt; 1 int(&quot;3.4&quot;)</span>
+<span class="go">ValueError: invalid literal for int() with base 10: &#39;3.4&#39;</span>
+</pre></div>
+</div>
+<p>However, Python 3 throws an error. Why? To be consistent, possibly. If you ask Python to perform two consecutive
+typecasts, you must convert it explicitly in code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;3.4&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="arithmetic-with-different-types">Arithmetic with Different Types</h2>
+<p>Which of the following will return the floating point number <code class="docutils literal notranslate"><span class="pre">2.0</span></code>?
+Note: there may be more than one right answer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">second</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="n">third</span> <span class="o">=</span> <span class="s2">&quot;1.1&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">first</span> <span class="pre">+</span> <span class="pre">float(second)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float(second)</span> <span class="pre">+</span> <span class="pre">float(third)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">first</span> <span class="pre">+</span> <span class="pre">int(third)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">first</span> <span class="pre">+</span> <span class="pre">int(float(third))</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int(first)</span> <span class="pre">+</span> <span class="pre">int(float(third))</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2.0</span> <span class="pre">*</span> <span class="pre">second</span></code></p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="id5">Solution</h2>
+<p>Answer: 1 and 4</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="complex-numbers">Complex Numbers</h2>
+<p>Python provides complex numbers,
+which are written as <code class="docutils literal notranslate"><span class="pre">1.0+2.0j</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">val</span></code> is a complex number,
+its real and imaginary parts can be accessed using <em>dot notation</em>
+as <code class="docutils literal notranslate"><span class="pre">val.real</span></code> and <code class="docutils literal notranslate"><span class="pre">val.imag</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a_complex_number</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">+</span> <span class="mi">2</span><span class="n">j</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a_complex_number</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a_complex_number</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">6.0</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Why do you think Python uses <code class="docutils literal notranslate"><span class="pre">j</span></code> instead of <code class="docutils literal notranslate"><span class="pre">i</span></code> for the imaginary part?</p></li>
+<li><p>What do you expect <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2j</span> <span class="pre">+</span> <span class="pre">3</span></code> to produce?</p></li>
+<li><p>What do you expect <code class="docutils literal notranslate"><span class="pre">4j</span></code> to be?  What about <code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">j</span></code> or <code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">+</span> <span class="pre">j</span></code>?</p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="id6">Solution</h2>
+<ol class="arabic simple">
+<li><p>Standard mathematics treatments typically use <code class="docutils literal notranslate"><span class="pre">i</span></code> to denote an imaginary number. However, from media reports it
+was an early convention established from electrical engineering that now presents a technically expensive area to
+change. <a class="reference external" href="https://stackoverflow.com/questions/24812444/why-are-complex-numbers-in-python-denoted-with-j-instead-of-i">Stack Overflow provides additional explanation and
+discussion.</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(4+2j)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">4j</span></code> and <code class="docutils literal notranslate"><span class="pre">Syntax</span> <span class="pre">Error:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code>. In the latter cases, <code class="docutils literal notranslate"><span class="pre">j</span></code> is considered a variable and the statement
+depends on if <code class="docutils literal notranslate"><span class="pre">j</span></code> is defined and if so, its assigned value.</p></li>
+</ol>
+</div>
+</div>
+<div class="keypoints docutils">
+<ul class="simple">
+<li><p>Every value has a type.</p></li>
+<li><p>Use the built-in function <code class="docutils literal notranslate"><span class="pre">type</span></code> to find the type of a value.</p></li>
+<li><p>Types control what operations can be done on values.</p></li>
+<li><p>Strings can be added and multiplied.</p></li>
+<li><p>Strings have a length (but numbers don’t).</p></li>
+<li><p>Must convert numbers to strings or vice versa when operating on them.</p></li>
+<li><p>Can mix integers and floats freely in operations.</p></li>
+<li><p>Variables only change value when something is assigned to them.</p></li>
+</ul>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to your Jupyter Book</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="built_in_functions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Built-in Functions and Help</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Types and Type Conversion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#every-value-has-a-type">Every value has a type.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-function-type-to-find-the-type-of-a-value">Use the built-in function <code class="docutils literal notranslate"><span class="pre">type</span></code> to find the type of a value.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#types-control-what-operations-or-methods-can-be-performed-on-a-given-value">Types control what operations (or methods) can be performed on a given value.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#you-can-use-the-and-operators-on-strings">You can use the “+” and “*” operators on strings.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#strings-have-a-length-but-numbers-don-t">Strings have a length (but numbers don’t).</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#must-convert-numbers-to-strings-or-vice-versa-when-operating-on-them-convert-numbers-and-strings">Must convert numbers to strings or vice versa when operating on them. {#convert-numbers-and-strings}</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#can-mix-integers-and-floats-freely-in-operations">Can mix integers and floats freely in operations.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-only-change-value-when-something-is-assigned-to-them">Variables only change value when something is assigned to them.</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Philosophers Who Code
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

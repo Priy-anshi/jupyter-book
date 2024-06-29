@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Plotting &#8212; Introduction to Data Analysis &amp; Plotting with Python</title>
+    <title>Plotting &#8212; Intro to Data Analysis and Plotting with Python</title>
   
   
   
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'plotting';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Variables and Assignment" href="mymarkdownfile.html" />
+    <link rel="prev" title="Pandas DataFrames" href="data_frames.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,8 +152,8 @@
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Introduction to Data Analysis & Plotting with Python - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Introduction to Data Analysis & Plotting with Python - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Intro to Data Analysis and Plotting with Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Intro to Data Analysis and Plotting with Python - Home"/>`);</script>
   
   
 </a></div>
@@ -174,15 +174,47 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Variables and Assignment
+                    Welcome to your Jupyter Book
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mymarkdownfile.html">Variables and Assignment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="type_conversion.html">Data Types and Type Conversion</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="built_in_functions.html">Built-in Functions and Help</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="reading_tabular_data.html">Reading Tabular Data into DataFrames</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="data_frames.html">Pandas DataFrames</a></li>
+
 
 
 
@@ -424,12 +456,14 @@ document.write(`
 <li><p>Create a scatter plot showing relationship between two data sets.</p></li>
 </ul>
 </div>
+<div class="docutils">
 <div class="question admonition">
 <p class="admonition-title">Questions</p>
 <ul class="simple">
 <li><p>How can I plot my data?</p></li>
 <li><p>How can I save my plot for publishing?</p></li>
 </ul>
+</div>
 </div>
 </section>
 <section id="matplotlib-is-the-most-widely-used-scientific-plotting-library-in-python">
@@ -452,7 +486,7 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Position (km)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><img alt="" src="fig/9_simple_position_time_plot.svg" />{alt=’A line chart showing time (hr) relative to position (km), using the values provided in the code block above. By default, the plotted line is blue against a white background, and the axes have been scaled automatically to fit the range of the input data.’}</p>
+<p><img alt="" src="fig/9_simple_position_time_plot.svg" />{alt=’Simple Position-Time Plot’}</p>
 <div class="callout docutils">
 <h2 class="rubric" id="display-all-open-figures">Display All Open Figures</h2>
 <p>In our Jupyter Notebook example, running the cell should generate the figure directly below the code.
@@ -751,12 +785,12 @@ that variable to save the figure to file.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="mymarkdownfile.html"
+       href="data_frames.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Variables and Assignment</p>
+        <p class="prev-next-title">Pandas DataFrames</p>
       </div>
     </a>
 </div>

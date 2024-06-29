@@ -1,0 +1,1233 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pandas DataFrames &#8212; Intro to Data Analysis and Plotting with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data_frames';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Plotting" href="plotting.html" />
+    <link rel="prev" title="Reading Tabular Data into DataFrames" href="reading_tabular_data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Intro to Data Analysis and Plotting with Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Intro to Data Analysis and Plotting with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="type_conversion.html">Data Types and Type Conversion</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="built_in_functions.html">Built-in Functions and Help</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="reading_tabular_data.html">Reading Tabular Data into DataFrames</a></li>
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pandas DataFrames</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdata_frames.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/data_frames.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Pandas DataFrames</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Pandas DataFrames</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#note-about-pandas-dataframes-series">Note about Pandas DataFrames/Series</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-values">Selecting values</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-iloc-to-select-values-by-their-entry-position">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.iloc[...,</span> <span class="pre">...]</span></code> to select values by their (entry) position</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-loc-to-select-values-by-their-entry-label">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.loc[...,</span> <span class="pre">...]</span></code> to select values by their (entry) label.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-on-its-own-to-mean-all-columns-or-all-rows">Use <code class="docutils literal notranslate"><span class="pre">:</span></code> on its own to mean all columns or all rows.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#select-multiple-columns-or-rows-using-dataframe-loc-and-a-named-slice">Select multiple columns or rows using <code class="docutils literal notranslate"><span class="pre">DataFrame.loc</span></code> and a named slice.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#result-of-slicing-can-be-used-in-further-operations">Result of slicing can be used in further operations.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-comparisons-to-select-data-based-on-value">Use comparisons to select data based on value.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#select-values-or-nan-using-a-boolean-mask">Select values or NaN using a Boolean mask.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#group-by-split-apply-combine">Group By: split-apply-combine</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pandas-dataframes">
+<h1>Pandas DataFrames<a class="headerlink" href="#pandas-dataframes" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Select individual values from a Pandas dataframe.</p></li>
+<li><p>Select entire rows or entire columns from a dataframe.</p></li>
+<li><p>Select a subset of both rows and columns from a dataframe in a single operation.</p></li>
+<li><p>Select a subset of a dataframe by a single Boolean criterion.</p></li>
+</ul>
+</div>
+<div class="question admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can I do statistical analysis of tabular data?</p></li>
+</ul>
+</div>
+</section>
+<section id="note-about-pandas-dataframes-series">
+<h1>Note about Pandas DataFrames/Series<a class="headerlink" href="#note-about-pandas-dataframes-series" title="Link to this heading">#</a></h1>
+<p>A <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">DataFrame</a> is a collection of <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html">Series</a>;
+The DataFrame is the way Pandas represents a table, and Series is the data-structure
+Pandas use to represent a column.</p>
+<p>Pandas is built on top of the <a class="reference external" href="https://www.numpy.org/">Numpy</a> library, which in practice means that
+most of the methods defined for Numpy Arrays apply to Pandas Series/DataFrames.</p>
+<p>What makes Pandas so attractive is the powerful interface to access individual records
+of the table, proper handling of missing values, and relational-databases operations
+between DataFrames.</p>
+</section>
+<section id="selecting-values">
+<h1>Selecting values<a class="headerlink" href="#selecting-values" title="Link to this heading">#</a></h1>
+<p>To access a value at the position <code class="docutils literal notranslate"><span class="pre">[i,j]</span></code> of a DataFrame, we have two options, depending on
+what is the meaning of <code class="docutils literal notranslate"><span class="pre">i</span></code> in use.
+Remember that a DataFrame provides an <em>index</em> as a way to identify the rows of the table;
+a row, then, has a <em>position</em> inside the table as well as a <em>label</em>, which
+uniquely identifies its <em>entry</em> in the DataFrame.</p>
+</section>
+<section id="use-dataframe-iloc-to-select-values-by-their-entry-position">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.iloc[...,</span> <span class="pre">...]</span></code> to select values by their (entry) position<a class="headerlink" href="#use-dataframe-iloc-to-select-values-by-their-entry-position" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Can specify location by numerical index analogously to 2D version of character selection in strings.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_europe.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">1601.056136</span>
+</pre></div>
+</div>
+</section>
+<section id="use-dataframe-loc-to-select-values-by-their-entry-label">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.loc[...,</span> <span class="pre">...]</span></code> to select values by their (entry) label.<a class="headerlink" href="#use-dataframe-loc-to-select-values-by-their-entry-label" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Can specify location by row and/or column name.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Albania&quot;</span><span class="p">,</span> <span class="s2">&quot;gdpPercap_1952&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">1601.056136</span>
+</pre></div>
+</div>
+</section>
+<section id="use-on-its-own-to-mean-all-columns-or-all-rows">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">:</span></code> on its own to mean all columns or all rows.<a class="headerlink" href="#use-on-its-own-to-mean-all-columns-or-all-rows" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Just like Python’s usual slicing notation.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Albania&quot;</span><span class="p">,</span> <span class="p">:])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">gdpPercap_1952    1601.056136</span>
+<span class="go">gdpPercap_1957    1942.284244</span>
+<span class="go">gdpPercap_1962    2312.888958</span>
+<span class="go">gdpPercap_1967    2760.196931</span>
+<span class="go">gdpPercap_1972    3313.422188</span>
+<span class="go">gdpPercap_1977    3533.003910</span>
+<span class="go">gdpPercap_1982    3630.880722</span>
+<span class="go">gdpPercap_1987    3738.932735</span>
+<span class="go">gdpPercap_1992    2497.437901</span>
+<span class="go">gdpPercap_1997    3193.054604</span>
+<span class="go">gdpPercap_2002    4604.211737</span>
+<span class="go">gdpPercap_2007    5937.029526</span>
+<span class="go">Name: Albania, dtype: float64</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Would get the same result printing <code class="docutils literal notranslate"><span class="pre">data.loc[&quot;Albania&quot;]</span></code> (without a second index).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;gdpPercap_1952&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">country</span>
+<span class="go">Albania                    1601.056136</span>
+<span class="go">Austria                    6137.076492</span>
+<span class="go">Belgium                    8343.105127</span>
+<span class="go">⋮ ⋮ ⋮</span>
+<span class="go">Switzerland               14734.232750</span>
+<span class="go">Turkey                     1969.100980</span>
+<span class="go">United Kingdom             9979.508487</span>
+<span class="go">Name: gdpPercap_1952, dtype: float64</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Would get the same result printing <code class="docutils literal notranslate"><span class="pre">data[&quot;gdpPercap_1952&quot;]</span></code></p></li>
+<li><p>Also get the same result printing <code class="docutils literal notranslate"><span class="pre">data.gdpPercap_1952</span></code> (not recommended, because easily confused with <code class="docutils literal notranslate"><span class="pre">.</span></code> notation for methods)</p></li>
+</ul>
+</section>
+<section id="select-multiple-columns-or-rows-using-dataframe-loc-and-a-named-slice">
+<h1>Select multiple columns or rows using <code class="docutils literal notranslate"><span class="pre">DataFrame.loc</span></code> and a named slice.<a class="headerlink" href="#select-multiple-columns-or-rows-using-dataframe-loc-and-a-named-slice" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">:</span><span class="s1">&#39;Poland&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap_1962&#39;</span><span class="p">:</span><span class="s1">&#39;gdpPercap_1972&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">             gdpPercap_1962  gdpPercap_1967  gdpPercap_1972</span>
+<span class="go">country</span>
+<span class="go">Italy           8243.582340    10022.401310    12269.273780</span>
+<span class="go">Montenegro      4649.593785     5907.850937     7778.414017</span>
+<span class="go">Netherlands    12790.849560    15363.251360    18794.745670</span>
+<span class="go">Norway         13450.401510    16361.876470    18965.055510</span>
+<span class="go">Poland          5338.752143     6557.152776     8006.506993</span>
+</pre></div>
+</div>
+<p>In the above code, we discover that <strong>slicing using <code class="docutils literal notranslate"><span class="pre">loc</span></code> is inclusive at both
+ends</strong>, which differs from <strong>slicing using <code class="docutils literal notranslate"><span class="pre">iloc</span></code></strong>, where slicing indicates
+everything up to but not including the final index.</p>
+</section>
+<section id="result-of-slicing-can-be-used-in-further-operations">
+<h1>Result of slicing can be used in further operations.<a class="headerlink" href="#result-of-slicing-can-be-used-in-further-operations" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Usually don’t just print a slice.</p></li>
+<li><p>All the statistical operators that work on entire dataframes
+work the same way on slices.</p></li>
+<li><p>E.g., calculate max of a slice.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">:</span><span class="s1">&#39;Poland&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap_1962&#39;</span><span class="p">:</span><span class="s1">&#39;gdpPercap_1972&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">gdpPercap_1962    13450.40151</span>
+<span class="go">gdpPercap_1967    16361.87647</span>
+<span class="go">gdpPercap_1972    18965.05551</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">:</span><span class="s1">&#39;Poland&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap_1962&#39;</span><span class="p">:</span><span class="s1">&#39;gdpPercap_1972&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">gdpPercap_1962    4649.593785</span>
+<span class="go">gdpPercap_1967    5907.850937</span>
+<span class="go">gdpPercap_1972    7778.414017</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+</section>
+<section id="use-comparisons-to-select-data-based-on-value">
+<h1>Use comparisons to select data based on value.<a class="headerlink" href="#use-comparisons-to-select-data-based-on-value" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Comparison is applied element by element.</p></li>
+<li><p>Returns a similarly-shaped dataframe of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a subset of data to keep output readable.</span>
+<span class="n">subset</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Italy&#39;</span><span class="p">:</span><span class="s1">&#39;Poland&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap_1962&#39;</span><span class="p">:</span><span class="s1">&#39;gdpPercap_1972&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Subset of data:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
+
+<span class="c1"># Which values were greater than 10000 ?</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Where are values large?</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">subset</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Subset of data:</span>
+<span class="go">             gdpPercap_1962  gdpPercap_1967  gdpPercap_1972</span>
+<span class="go">country</span>
+<span class="go">Italy           8243.582340    10022.401310    12269.273780</span>
+<span class="go">Montenegro      4649.593785     5907.850937     7778.414017</span>
+<span class="go">Netherlands    12790.849560    15363.251360    18794.745670</span>
+<span class="go">Norway         13450.401510    16361.876470    18965.055510</span>
+<span class="go">Poland          5338.752143     6557.152776     8006.506993</span>
+
+<span class="go">Where are values large?</span>
+<span class="go">            gdpPercap_1962 gdpPercap_1967 gdpPercap_1972</span>
+<span class="go">country</span>
+<span class="go">Italy                False           True           True</span>
+<span class="go">Montenegro           False          False          False</span>
+<span class="go">Netherlands           True           True           True</span>
+<span class="go">Norway                True           True           True</span>
+<span class="go">Poland               False          False          False</span>
+</pre></div>
+</div>
+</section>
+<section id="select-values-or-nan-using-a-boolean-mask">
+<h1>Select values or NaN using a Boolean mask.<a class="headerlink" href="#select-values-or-nan-using-a-boolean-mask" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>A frame full of Booleans is sometimes called a <em>mask</em> because of how it can be used.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="n">subset</span> <span class="o">&gt;</span> <span class="mi">10000</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">             gdpPercap_1962  gdpPercap_1967  gdpPercap_1972</span>
+<span class="go">country</span>
+<span class="go">Italy                   NaN     10022.40131     12269.27378</span>
+<span class="go">Montenegro              NaN             NaN             NaN</span>
+<span class="go">Netherlands     12790.84956     15363.25136     18794.74567</span>
+<span class="go">Norway          13450.40151     16361.87647     18965.05551</span>
+<span class="go">Poland                  NaN             NaN             NaN</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Get the value where the mask is true, and NaN (Not a Number) where it is false.</p></li>
+<li><p>Useful because NaNs are ignored by operations like max, min, average, etc.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="n">subset</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">       gdpPercap_1962  gdpPercap_1967  gdpPercap_1972</span>
+<span class="go">count        2.000000        3.000000        3.000000</span>
+<span class="go">mean     13120.625535    13915.843047    16676.358320</span>
+<span class="go">std        466.373656     3408.589070     3817.597015</span>
+<span class="go">min      12790.849560    10022.401310    12269.273780</span>
+<span class="go">25%      12955.737547    12692.826335    15532.009725</span>
+<span class="go">50%      13120.625535    15363.251360    18794.745670</span>
+<span class="go">75%      13285.513523    15862.563915    18879.900590</span>
+<span class="go">max      13450.401510    16361.876470    18965.055510</span>
+</pre></div>
+</div>
+</section>
+<section id="group-by-split-apply-combine">
+<h1>Group By: split-apply-combine<a class="headerlink" href="#group-by-split-apply-combine" title="Link to this heading">#</a></h1>
+<div class="instructor docutils">
+<p>Learners often struggle here, many may not work with financial data and concepts so they
+find the example concepts difficult to get their head around. The biggest problem
+though is the line generating the wealth_score, this step needs to be talked through
+throughly:</p>
+<ul class="simple">
+<li><p>It uses implicit conversion between boolean and float values which
+has not been covered in the course so far.</p></li>
+<li><p>The axis=1 argument needs to be explained clearly.</p></li>
+</ul>
+</div>
+<p>Pandas vectorizing methods and grouping operations are features that provide users
+much flexibility to analyse their data.</p>
+<p>For instance, let’s say we want to have a clearer view on how the European countries
+split themselves according to their GDP.</p>
+<ol class="arabic simple">
+<li><p>We may have a glance by splitting the countries in two groups during the years surveyed,
+those who presented a GDP <em>higher</em> than the European average and those with a <em>lower</em> GDP.</p></li>
+<li><p>We then estimate a <em>wealthy score</em> based on the historical (from 1962 to 2007) values,
+where we account how many times a country has participated in the groups of <em>lower</em> or <em>higher</em> GDP</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mask_higher</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">wealth_score</span> <span class="o">=</span> <span class="n">mask_higher</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wealth_score</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">country</span>
+<span class="go">Albania                   0.000000</span>
+<span class="go">Austria                   1.000000</span>
+<span class="go">Belgium                   1.000000</span>
+<span class="go">Bosnia and Herzegovina    0.000000</span>
+<span class="go">Bulgaria                  0.000000</span>
+<span class="go">Croatia                   0.000000</span>
+<span class="go">Czech Republic            0.500000</span>
+<span class="go">Denmark                   1.000000</span>
+<span class="go">Finland                   1.000000</span>
+<span class="go">France                    1.000000</span>
+<span class="go">Germany                   1.000000</span>
+<span class="go">Greece                    0.333333</span>
+<span class="go">Hungary                   0.000000</span>
+<span class="go">Iceland                   1.000000</span>
+<span class="go">Ireland                   0.333333</span>
+<span class="go">Italy                     0.500000</span>
+<span class="go">Montenegro                0.000000</span>
+<span class="go">Netherlands               1.000000</span>
+<span class="go">Norway                    1.000000</span>
+<span class="go">Poland                    0.000000</span>
+<span class="go">Portugal                  0.000000</span>
+<span class="go">Romania                   0.000000</span>
+<span class="go">Serbia                    0.000000</span>
+<span class="go">Slovak Republic           0.000000</span>
+<span class="go">Slovenia                  0.333333</span>
+<span class="go">Spain                     0.333333</span>
+<span class="go">Sweden                    1.000000</span>
+<span class="go">Switzerland               1.000000</span>
+<span class="go">Turkey                    0.000000</span>
+<span class="go">United Kingdom            1.000000</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+<p>Finally, for each group in the <code class="docutils literal notranslate"><span class="pre">wealth_score</span></code> table, we sum their (financial) contribution
+across the years surveyed using chained methods:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">wealth_score</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">          gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  gdpPercap_1967  \</span>
+<span class="go">0.000000    36916.854200    46110.918793    56850.065437    71324.848786   </span>
+<span class="go">0.333333    16790.046878    20942.456800    25744.935321    33567.667670   </span>
+<span class="go">0.500000    11807.544405    14505.000150    18380.449470    21421.846200   </span>
+<span class="go">1.000000   104317.277560   127332.008735   149989.154201   178000.350040   </span>
+
+<span class="go">          gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  gdpPercap_1987  \</span>
+<span class="go">0.000000    88569.346898   104459.358438   113553.768507   119649.599409   </span>
+<span class="go">0.333333    45277.839976    53860.456750    59679.634020    64436.912960   </span>
+<span class="go">0.500000    25377.727380    29056.145370    31914.712050    35517.678220   </span>
+<span class="go">1.000000   215162.343140   241143.412730   263388.781960   296825.131210   </span>
+
+<span class="go">          gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007  </span>
+<span class="go">0.000000    92380.047256   103772.937598   118590.929863   149577.357928  </span>
+<span class="go">0.333333    67918.093220    80876.051580   102086.795210   122803.729520  </span>
+<span class="go">0.500000    36310.666080    40723.538700    45564.308390    51403.028210  </span>
+<span class="go">1.000000   315238.235970   346930.926170   385109.939210   427850.333420</span>
+</pre></div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="selection-of-individual-values">Selection of Individual Values</h2>
+<p>Assume Pandas has been imported into your notebook
+and the Gapminder GDP data for Europe has been loaded:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data_europe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_europe.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Write an expression to find the Per Capita GDP of Serbia in 2007.</p>
+<div class="solution docutils">
+<h2 class="rubric" id="solution">Solution</h2>
+<p>The selection can be done by using the labels for both the row (“Serbia”) and the column (“gdpPercap_2007”):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data_europe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Serbia&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap_2007&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The output is</p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">9786.534714</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="extent-of-slicing">Extent of Slicing</h2>
+<ol class="arabic simple">
+<li><p>Do the two statements below produce the same output?</p></li>
+<li><p>Based on this,
+what rule governs what is included (or not) in numerical slices and named slices in Pandas?</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data_europe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_europe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Albania&#39;</span><span class="p">:</span><span class="s1">&#39;Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap_1952&#39;</span><span class="p">:</span><span class="s1">&#39;gdpPercap_1962&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="id1">Solution</h2>
+<p>No, they do not produce the same output! The output of the first statement is:</p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">        gdpPercap_1952  gdpPercap_1957</span>
+<span class="go">country                                </span>
+<span class="go">Albania     1601.056136     1942.284244</span>
+<span class="go">Austria     6137.076492     8842.598030</span>
+</pre></div>
+</div>
+<p>The second statement gives:</p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">        gdpPercap_1952  gdpPercap_1957  gdpPercap_1962</span>
+<span class="go">country                                                </span>
+<span class="go">Albania     1601.056136     1942.284244     2312.888958</span>
+<span class="go">Austria     6137.076492     8842.598030    10750.721110</span>
+<span class="go">Belgium     8343.105127     9714.960623    10991.206760</span>
+</pre></div>
+</div>
+<p>Clearly, the second statement produces an additional column and an additional row compared to the first statement.<br />
+What conclusion can we draw? We see that a numerical slice, 0:2, <em>omits</em> the final index (i.e. index 2)
+in the range provided,
+while a named slice, ‘gdpPercap_1952’:’gdpPercap_1962’, <em>includes</em> the final element.</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="reconstructing-data">Reconstructing Data</h2>
+<p>Explain what each line in the following short program does:
+what is in <code class="docutils literal notranslate"><span class="pre">first</span></code>, <code class="docutils literal notranslate"><span class="pre">second</span></code>, etc.?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_all.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="n">second</span> <span class="o">=</span> <span class="n">first</span><span class="p">[</span><span class="n">first</span><span class="p">[</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Americas&#39;</span><span class="p">]</span>
+<span class="n">third</span> <span class="o">=</span> <span class="n">second</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Puerto Rico&#39;</span><span class="p">)</span>
+<span class="n">fourth</span> <span class="o">=</span> <span class="n">third</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">fourth</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;result.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="id2">Solution</h2>
+<p>Let’s go through this piece of code line by line.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_all.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This line loads the dataset containing the GDP data from all countries into a dataframe called
+<code class="docutils literal notranslate"><span class="pre">first</span></code>. The <code class="docutils literal notranslate"><span class="pre">index_col='country'</span></code> parameter selects which column to use as the
+row labels in the dataframe.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">second</span> <span class="o">=</span> <span class="n">first</span><span class="p">[</span><span class="n">first</span><span class="p">[</span><span class="s1">&#39;continent&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Americas&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This line makes a selection: only those rows of <code class="docutils literal notranslate"><span class="pre">first</span></code> for which the ‘continent’ column matches
+‘Americas’ are extracted. Notice how the Boolean expression inside the brackets,
+<code class="docutils literal notranslate"><span class="pre">first['continent']</span> <span class="pre">==</span> <span class="pre">'Americas'</span></code>, is used to select only those rows where the expression is true.
+Try printing this expression! Can you print also its individual True/False elements?
+(hint: first assign the expression to a variable)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">third</span> <span class="o">=</span> <span class="n">second</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Puerto Rico&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As the syntax suggests, this line drops the row from <code class="docutils literal notranslate"><span class="pre">second</span></code> where the label is ‘Puerto Rico’. The
+resulting dataframe <code class="docutils literal notranslate"><span class="pre">third</span></code> has one row less than the original dataframe <code class="docutils literal notranslate"><span class="pre">second</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fourth</span> <span class="o">=</span> <span class="n">third</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Again we apply the drop function, but in this case we are dropping not a row but a whole column.
+To accomplish this, we need to specify also the <code class="docutils literal notranslate"><span class="pre">axis</span></code> parameter (we want to drop the second column
+which has index 1).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fourth</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;result.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The final step is to write the data that we have been working on to a csv file. Pandas makes this easy
+with the <code class="docutils literal notranslate"><span class="pre">to_csv()</span></code> function. The only required argument to the function is the filename. Note that the
+file will be written in the directory from which you started the Jupyter or Python session.</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="selecting-indices">Selecting Indices</h2>
+<p>Explain in simple terms what <code class="docutils literal notranslate"><span class="pre">idxmin</span></code> and <code class="docutils literal notranslate"><span class="pre">idxmax</span></code> do in the short program below.
+When would you use these methods?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_europe.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">idxmin</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">idxmax</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="id3">Solution</h2>
+<p>For each column in <code class="docutils literal notranslate"><span class="pre">data</span></code>, <code class="docutils literal notranslate"><span class="pre">idxmin</span></code> will return the index value corresponding to each column’s minimum;
+<code class="docutils literal notranslate"><span class="pre">idxmax</span></code> will do accordingly the same for each column’s maximum value.</p>
+<p>You can use these functions whenever you want to get the row index of the minimum/maximum value and not the actual minimum/maximum value.</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="practice-with-selection">Practice with Selection</h2>
+<p>Assume Pandas has been imported and the Gapminder GDP data for Europe has been loaded.
+Write an expression to select each of the following:</p>
+<ol class="arabic simple">
+<li><p>GDP per capita for all countries in 1982.</p></li>
+<li><p>GDP per capita for Denmark for all years.</p></li>
+<li><p>GDP per capita for all countries for years <em>after</em> 1985.</p></li>
+<li><p>GDP per capita for each country in 2007 as a multiple of
+GDP per capita for that country in 1952.</p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="id4">Solution</h2>
+<p>1:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;gdpPercap_1982&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>2:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Denmark&#39;</span><span class="p">,:]</span>
+</pre></div>
+</div>
+<p>3:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;gdpPercap_1985&#39;</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>Pandas is smart enough to recognize the number at the end of the column label and does not give you an error, although no column named <code class="docutils literal notranslate"><span class="pre">gdpPercap_1985</span></code> actually exists. This is useful if new columns are added to the CSV file later.</p>
+<p>4:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;gdpPercap_2007&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;gdpPercap_1952&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="many-ways-of-access">Many Ways of Access</h2>
+<p>There are at least two ways of accessing a value or slice of a DataFrame: by name or index.
+However, there are many others. For example, a single column or row can be accessed either as a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>
+or a <code class="docutils literal notranslate"><span class="pre">Series</span></code> object.</p>
+<p>Suggest different ways of doing the following operations on a DataFrame:</p>
+<ol class="arabic simple">
+<li><p>Access a single column</p></li>
+<li><p>Access a single row</p></li>
+<li><p>Access an individual DataFrame element</p></li>
+<li><p>Access several columns</p></li>
+<li><p>Access several rows</p></li>
+<li><p>Access a subset of specific rows and columns</p></li>
+<li><p>Access a subset of row and column ranges</p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="id5">Solution</h2>
+<p>1. Access a single column:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># by name</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]</span>   <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="p">[[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]]</span> <span class="c1"># as a DataFrame</span>
+
+<span class="c1"># by name using .loc</span>
+<span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]</span>  <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># as a DataFrame</span>
+
+<span class="c1"># Dot notation (Series)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">col_name</span>
+
+<span class="c1"># by index (iloc)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">col_index</span><span class="p">]</span>   <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">col_index</span><span class="p">]]</span> <span class="c1"># as a DataFrame</span>
+
+<span class="c1"># using a mask</span>
+<span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="s2">&quot;col_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<p>2. Access a single row:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># by name using .loc</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]</span> <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]]</span> <span class="c1"># as a DataFrame</span>
+
+<span class="c1"># by name</span>
+<span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]</span> <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span> <span class="c1"># as a DataFrame</span>
+
+<span class="c1"># by index</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span>   <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">row_index</span><span class="p">]]</span>   <span class="c1"># as a DataFrame</span>
+
+<span class="c1"># using mask</span>
+<span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="s2">&quot;row_name&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>3. Access an individual DataFrame element:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># by column/row names</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;column_name&quot;</span><span class="p">][</span><span class="s2">&quot;row_name&quot;</span><span class="p">]</span>         <span class="c1"># as a Series</span>
+
+<span class="n">data</span><span class="p">[[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]</span>  <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="p">[[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]]</span>  <span class="c1"># as a DataFrame</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row_name&quot;</span><span class="p">][</span><span class="s2">&quot;col_name&quot;</span><span class="p">]</span>  <span class="c1"># as a value</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]][</span><span class="s2">&quot;col_name&quot;</span><span class="p">]</span>  <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]][[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]]</span>  <span class="c1"># as a DataFrame</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row_name&quot;</span><span class="p">,</span> <span class="s2">&quot;col_name&quot;</span><span class="p">]</span>  <span class="c1"># as a value</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">],</span> <span class="s2">&quot;col_name&quot;</span><span class="p">]</span>  <span class="c1"># as a Series. Preserves index. Column name is moved to `.name`.</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row_name&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]]</span>  <span class="c1"># as a Series. Index is moved to `.name.` Sets index to column name.</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]]</span>  <span class="c1"># as a DataFrame (preserves original index and column name)</span>
+
+<span class="c1"># by column/row names: Dot notation</span>
+<span class="n">data</span><span class="o">.</span><span class="n">col_name</span><span class="o">.</span><span class="n">row_name</span>
+
+<span class="c1"># by column/row indices</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_index</span><span class="p">,</span> <span class="n">col_index</span><span class="p">]</span> <span class="c1"># as a value</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">row_index</span><span class="p">],</span> <span class="n">col_index</span><span class="p">]</span> <span class="c1"># as a Series. Preserves index. Column name is moved to `.name`</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_index</span><span class="p">,</span> <span class="p">[</span><span class="n">col_index</span><span class="p">]]</span> <span class="c1"># as a Series. Index is moved to `.name.` Sets index to column name.</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">row_index</span><span class="p">],</span> <span class="p">[</span><span class="n">col_index</span><span class="p">]]</span> <span class="c1"># as a DataFrame (preserves original index and column name)</span>
+
+<span class="c1"># column name + row index</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;col_name&quot;</span><span class="p">][</span><span class="n">row_index</span><span class="p">]</span>
+<span class="n">data</span><span class="o">.</span><span class="n">col_name</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;col_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span>
+
+<span class="c1"># column index + row name</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">col_index</span><span class="p">]]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]</span>  <span class="c1"># as a Series</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">col_index</span><span class="p">]]</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row_name&quot;</span><span class="p">]]</span>  <span class="c1"># as a DataFrame</span>
+
+<span class="c1"># using masks</span>
+<span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="s2">&quot;row_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="s2">&quot;col_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<p>4. Access several columns:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># by name</span>
+<span class="n">data</span><span class="p">[[</span><span class="s2">&quot;col1&quot;</span><span class="p">,</span> <span class="s2">&quot;col2&quot;</span><span class="p">,</span> <span class="s2">&quot;col3&quot;</span><span class="p">]]</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s2">&quot;col1&quot;</span><span class="p">,</span> <span class="s2">&quot;col2&quot;</span><span class="p">,</span> <span class="s2">&quot;col3&quot;</span><span class="p">]]</span>
+
+<span class="c1"># by index</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">col1_index</span><span class="p">,</span> <span class="n">col2_index</span><span class="p">,</span> <span class="n">col3_index</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>5. Access several rows</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># by name</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row1&quot;</span><span class="p">,</span> <span class="s2">&quot;row2&quot;</span><span class="p">,</span> <span class="s2">&quot;row3&quot;</span><span class="p">]]</span>
+
+<span class="c1"># by index</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">row1_index</span><span class="p">,</span> <span class="n">row2_index</span><span class="p">,</span> <span class="n">row3_index</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>6. Access a subset of specific rows and columns</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># by names</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row1&quot;</span><span class="p">,</span> <span class="s2">&quot;row2&quot;</span><span class="p">,</span> <span class="s2">&quot;row3&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;col1&quot;</span><span class="p">,</span> <span class="s2">&quot;col2&quot;</span><span class="p">,</span> <span class="s2">&quot;col3&quot;</span><span class="p">]]</span>
+
+<span class="c1"># by indices</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">row1_index</span><span class="p">,</span> <span class="n">row2_index</span><span class="p">,</span> <span class="n">row3_index</span><span class="p">],</span> <span class="p">[</span><span class="n">col1_index</span><span class="p">,</span> <span class="n">col2_index</span><span class="p">,</span> <span class="n">col3_index</span><span class="p">]]</span>
+
+<span class="c1"># column names + row indices</span>
+<span class="n">data</span><span class="p">[[</span><span class="s2">&quot;col1&quot;</span><span class="p">,</span> <span class="s2">&quot;col2&quot;</span><span class="p">,</span> <span class="s2">&quot;col3&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">row1_index</span><span class="p">,</span> <span class="n">row2_index</span><span class="p">,</span> <span class="n">row3_index</span><span class="p">]]</span>
+
+<span class="c1"># column indices + row names</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">col1_index</span><span class="p">,</span> <span class="n">col2_index</span><span class="p">,</span> <span class="n">col3_index</span><span class="p">]]</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;row1&quot;</span><span class="p">,</span> <span class="s2">&quot;row2&quot;</span><span class="p">,</span> <span class="s2">&quot;row3&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>7. Access a subset of row and column ranges</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># by name</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row1&quot;</span><span class="p">:</span><span class="s2">&quot;row2&quot;</span><span class="p">,</span> <span class="s2">&quot;col1&quot;</span><span class="p">:</span><span class="s2">&quot;col2&quot;</span><span class="p">]</span>
+
+<span class="c1"># by index</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row1_index</span><span class="p">:</span><span class="n">row2_index</span><span class="p">,</span> <span class="n">col1_index</span><span class="p">:</span><span class="n">col2_index</span><span class="p">]</span>
+
+<span class="c1"># column names + row indices</span>
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;col1_name&quot;</span><span class="p">:</span><span class="s2">&quot;col2_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row1_index</span><span class="p">:</span><span class="n">row2_index</span><span class="p">]</span>
+
+<span class="c1"># column indices + row names</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">col1_index</span><span class="p">:</span><span class="n">col2_index</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;row1&quot;</span><span class="p">:</span><span class="s2">&quot;row2&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="exploring-available-methods-using-the-dir-function">Exploring available methods using the <code class="docutils literal notranslate"><span class="pre">dir()</span></code> function</h2>
+<p>Python includes a <code class="docutils literal notranslate"><span class="pre">dir()</span></code> function that can be used to display all of the available methods (functions) that are built into a data object.  In Episode 4, we used some methods with a string. But we can see many more are available by using <code class="docutils literal notranslate"><span class="pre">dir()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_string</span> <span class="o">=</span> <span class="s1">&#39;Hello world!&#39;</span>   <span class="c1"># creation of a string object </span>
+<span class="nb">dir</span><span class="p">(</span><span class="n">my_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This command returns:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;__add__&#39;</span><span class="p">,</span>
+<span class="o">...</span>
+<span class="s1">&#39;__subclasshook__&#39;</span><span class="p">,</span>
+<span class="s1">&#39;capitalize&#39;</span><span class="p">,</span>
+<span class="s1">&#39;casefold&#39;</span><span class="p">,</span>
+<span class="s1">&#39;center&#39;</span><span class="p">,</span>
+<span class="o">...</span>
+<span class="s1">&#39;upper&#39;</span><span class="p">,</span>
+<span class="s1">&#39;zfill&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">help()</span></code> or <kbd>Shift</kbd>+<kbd>Tab</kbd> to get more information about what these methods do.</p>
+<p>Assume Pandas has been imported and the Gapminder GDP data for Europe has been loaded as <code class="docutils literal notranslate"><span class="pre">data</span></code>.  Then, use <code class="docutils literal notranslate"><span class="pre">dir()</span></code>
+to find the function that prints out the median per-capita GDP across all European countries for each year that information is available.</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id6">Solution</h2>
+<p>Among many choices, <code class="docutils literal notranslate"><span class="pre">dir()</span></code> lists the <code class="docutils literal notranslate"><span class="pre">median()</span></code> function as a possibility.  Thus,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="interpretation">Interpretation</h2>
+<p>Poland’s borders have been stable since 1945,
+but changed several times in the years before then.
+How would you handle this if you were creating a table of GDP per capita for Poland
+for the entire twentieth century?</p>
+</div>
+<div class="keypoints docutils">
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.iloc[...,</span> <span class="pre">...]</span></code> to select values by integer location.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">:</span></code> on its own to mean all columns or all rows.</p></li>
+<li><p>Select multiple columns or rows using <code class="docutils literal notranslate"><span class="pre">DataFrame.loc</span></code> and a named slice.</p></li>
+<li><p>Result of slicing can be used in further operations.</p></li>
+<li><p>Use comparisons to select data based on value.</p></li>
+<li><p>Select values or NaN using a Boolean mask.</p></li>
+</ul>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="reading_tabular_data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Reading Tabular Data into DataFrames</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="plotting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Plotting</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Pandas DataFrames</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#note-about-pandas-dataframes-series">Note about Pandas DataFrames/Series</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-values">Selecting values</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-iloc-to-select-values-by-their-entry-position">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.iloc[...,</span> <span class="pre">...]</span></code> to select values by their (entry) position</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-loc-to-select-values-by-their-entry-label">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.loc[...,</span> <span class="pre">...]</span></code> to select values by their (entry) label.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-on-its-own-to-mean-all-columns-or-all-rows">Use <code class="docutils literal notranslate"><span class="pre">:</span></code> on its own to mean all columns or all rows.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#select-multiple-columns-or-rows-using-dataframe-loc-and-a-named-slice">Select multiple columns or rows using <code class="docutils literal notranslate"><span class="pre">DataFrame.loc</span></code> and a named slice.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#result-of-slicing-can-be-used-in-further-operations">Result of slicing can be used in further operations.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-comparisons-to-select-data-based-on-value">Use comparisons to select data based on value.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#select-values-or-nan-using-a-boolean-mask">Select values or NaN using a Boolean mask.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#group-by-split-apply-combine">Group By: split-apply-combine</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Philosophers Who Code
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,975 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reading Tabular Data into DataFrames &#8212; Intro to Data Analysis and Plotting with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reading_tabular_data';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pandas DataFrames" href="data_frames.html" />
+    <link rel="prev" title="Libraries" href="libraries.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Intro to Data Analysis and Plotting with Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Intro to Data Analysis and Plotting with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="type_conversion.html">Data Types and Type Conversion</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="built_in_functions.html">Built-in Functions and Help</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="libraries.html">Libraries</a></li>
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Reading Tabular Data into DataFrames</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="data_frames.html">Pandas DataFrames</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Freading_tabular_data.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/reading_tabular_data.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reading Tabular Data into DataFrames</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Reading Tabular Data into DataFrames</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-pandas-library-to-do-statistics-on-tabular-data">Use the Pandas library to do statistics on tabular data.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-index-col-to-specify-that-a-column-s-values-should-be-used-as-row-headings">Use <code class="docutils literal notranslate"><span class="pre">index_col</span></code> to specify that a column’s values should be used as row headings.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-dataframe-info-method-to-find-out-more-about-a-dataframe">Use the <code class="docutils literal notranslate"><span class="pre">DataFrame.info()</span></code> method to find out more about a dataframe.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataframe-columns-variable-stores-information-about-the-dataframe-s-columns">The <code class="docutils literal notranslate"><span class="pre">DataFrame.columns</span></code> variable stores information about the dataframe’s columns.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-t-to-transpose-a-dataframe">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.T</span></code> to transpose a dataframe.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-describe-to-get-summary-statistics-about-data">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.describe()</span></code> to get summary statistics about data.</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="reading-tabular-data-into-dataframes">
+<h1>Reading Tabular Data into DataFrames<a class="headerlink" href="#reading-tabular-data-into-dataframes" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Import the Pandas library.</p></li>
+<li><p>Use Pandas to load a simple CSV data set.</p></li>
+<li><p>Get some basic information about a Pandas DataFrame.</p></li>
+</ul>
+</div>
+<div class="docutils">
+<div class="question admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can I read tabular data?</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="use-the-pandas-library-to-do-statistics-on-tabular-data">
+<h1>Use the Pandas library to do statistics on tabular data.<a class="headerlink" href="#use-the-pandas-library-to-do-statistics-on-tabular-data" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/">Pandas</a> is a widely-used Python library for statistics, particularly on tabular data.</p></li>
+<li><p>Borrows many features from R’s dataframes.</p>
+<ul>
+<li><p>A 2-dimensional table whose columns have names
+and potentially have different data types.</p></li>
+</ul>
+</li>
+<li><p>Load Pandas with <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pandas</span> <span class="pre">as</span> <span class="pre">pd</span></code>. The alias <code class="docutils literal notranslate"><span class="pre">pd</span></code> is commonly used to refer to the Pandas library in code.</p></li>
+<li><p>Read a Comma Separated Values (CSV) data file with <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code>.</p>
+<ul>
+<li><p>Argument is the name of the file to be read.</p></li>
+<li><p>Returns a dataframe that you can assign to a variable</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data_oceania</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_oceania.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_oceania</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">       country  gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  \</span>
+<span class="go">0    Australia     10039.59564     10949.64959     12217.22686</span>
+<span class="go">1  New Zealand     10556.57566     12247.39532     13175.67800</span>
+
+<span class="go">   gdpPercap_1967  gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  \</span>
+<span class="go">0     14526.12465     16788.62948     18334.19751     19477.00928</span>
+<span class="go">1     14463.91893     16046.03728     16233.71770     17632.41040</span>
+
+<span class="go">   gdpPercap_1987  gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  \</span>
+<span class="go">0     21888.88903     23424.76683     26997.93657     30687.75473</span>
+<span class="go">1     19007.19129     18363.32494     21050.41377     23189.80135</span>
+
+<span class="go">   gdpPercap_2007</span>
+<span class="go">0     34435.36744</span>
+<span class="go">1     25185.00911</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The columns in a dataframe are the observed variables, and the rows are the observations.</p></li>
+<li><p>Pandas uses backslash <code class="docutils literal notranslate"><span class="pre">\</span></code> to show wrapped lines when output is too wide to fit the screen.</p></li>
+<li><p>Using descriptive dataframe names helps us distinguish between multiple dataframes so we won’t accidentally overwrite a dataframe or read from the wrong one.</p></li>
+</ul>
+<div class="callout docutils">
+<h2 class="rubric" id="file-not-found">File Not Found</h2>
+<p>Our lessons store their data files in a <code class="docutils literal notranslate"><span class="pre">data</span></code> sub-directory,
+which is why the path to the file is <code class="docutils literal notranslate"><span class="pre">data/gapminder_gdp_oceania.csv</span></code>.
+If you forget to include <code class="docutils literal notranslate"><span class="pre">data/</span></code>,
+or if you include it but your copy of the file is somewhere else,
+you will get a <a class="reference internal" href="#04-built-in.md"><span class="xref myst">runtime error</span></a>
+that ends with a line like this:</p>
+<div class="highlight-error notranslate"><div class="highlight"><pre><span></span>FileNotFoundError: [Errno 2] No such file or directory: &#39;data/gapminder_gdp_oceania.csv&#39;
+</pre></div>
+</div>
+</div>
+</section>
+<section id="use-index-col-to-specify-that-a-column-s-values-should-be-used-as-row-headings">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">index_col</span></code> to specify that a column’s values should be used as row headings.<a class="headerlink" href="#use-index-col-to-specify-that-a-column-s-values-should-be-used-as-row-headings" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Row headings are numbers (0 and 1 in this case).</p></li>
+<li><p>Really want to index by country.</p></li>
+<li><p>Pass the name of the column to <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> as its <code class="docutils literal notranslate"><span class="pre">index_col</span></code> parameter to do this.</p></li>
+<li><p>Naming the dataframe <code class="docutils literal notranslate"><span class="pre">data_oceania_country</span></code> tells us which region the data includes (<code class="docutils literal notranslate"><span class="pre">oceania</span></code>) and how it is indexed (<code class="docutils literal notranslate"><span class="pre">country</span></code>).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_oceania_country</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_oceania.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_oceania_country</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">             gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  gdpPercap_1967  \</span>
+<span class="go">country</span>
+<span class="go">Australia       10039.59564     10949.64959     12217.22686     14526.12465</span>
+<span class="go">New Zealand     10556.57566     12247.39532     13175.67800     14463.91893</span>
+
+<span class="go">             gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  gdpPercap_1987  \</span>
+<span class="go">country</span>
+<span class="go">Australia       16788.62948     18334.19751     19477.00928     21888.88903</span>
+<span class="go">New Zealand     16046.03728     16233.71770     17632.41040     19007.19129</span>
+
+<span class="go">             gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007</span>
+<span class="go">country</span>
+<span class="go">Australia       23424.76683     26997.93657     30687.75473     34435.36744</span>
+<span class="go">New Zealand     18363.32494     21050.41377     23189.80135     25185.00911</span>
+</pre></div>
+</div>
+</section>
+<section id="use-the-dataframe-info-method-to-find-out-more-about-a-dataframe">
+<h1>Use the <code class="docutils literal notranslate"><span class="pre">DataFrame.info()</span></code> method to find out more about a dataframe.<a class="headerlink" href="#use-the-dataframe-info-method-to-find-out-more-about-a-dataframe" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_oceania_country</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</span>
+<span class="go">Index: 2 entries, Australia to New Zealand</span>
+<span class="go">Data columns (total 12 columns):</span>
+<span class="go">gdpPercap_1952    2 non-null float64</span>
+<span class="go">gdpPercap_1957    2 non-null float64</span>
+<span class="go">gdpPercap_1962    2 non-null float64</span>
+<span class="go">gdpPercap_1967    2 non-null float64</span>
+<span class="go">gdpPercap_1972    2 non-null float64</span>
+<span class="go">gdpPercap_1977    2 non-null float64</span>
+<span class="go">gdpPercap_1982    2 non-null float64</span>
+<span class="go">gdpPercap_1987    2 non-null float64</span>
+<span class="go">gdpPercap_1992    2 non-null float64</span>
+<span class="go">gdpPercap_1997    2 non-null float64</span>
+<span class="go">gdpPercap_2002    2 non-null float64</span>
+<span class="go">gdpPercap_2007    2 non-null float64</span>
+<span class="go">dtypes: float64(12)</span>
+<span class="go">memory usage: 208.0+ bytes</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>This is a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></p></li>
+<li><p>Two rows named <code class="docutils literal notranslate"><span class="pre">'Australia'</span></code> and <code class="docutils literal notranslate"><span class="pre">'New</span> <span class="pre">Zealand'</span></code></p></li>
+<li><p>Twelve columns, each of which has two actual 64-bit floating point values.</p>
+<ul>
+<li><p>We will talk later about null values, which are used to represent missing observations.</p></li>
+</ul>
+</li>
+<li><p>Uses 208 bytes of memory.</p></li>
+</ul>
+</section>
+<section id="the-dataframe-columns-variable-stores-information-about-the-dataframe-s-columns">
+<h1>The <code class="docutils literal notranslate"><span class="pre">DataFrame.columns</span></code> variable stores information about the dataframe’s columns.<a class="headerlink" href="#the-dataframe-columns-variable-stores-information-about-the-dataframe-s-columns" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Note that this is data, <em>not</em> a method.  (It doesn’t have parentheses.)</p>
+<ul>
+<li><p>Like <code class="docutils literal notranslate"><span class="pre">math.pi</span></code>.</p></li>
+<li><p>So do not use <code class="docutils literal notranslate"><span class="pre">()</span></code> to try to call it.</p></li>
+</ul>
+</li>
+<li><p>Called a <em>member variable</em>, or just <em>member</em>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data_oceania_country</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Index([&#39;gdpPercap_1952&#39;, &#39;gdpPercap_1957&#39;, &#39;gdpPercap_1962&#39;, &#39;gdpPercap_1967&#39;,</span>
+<span class="go">       &#39;gdpPercap_1972&#39;, &#39;gdpPercap_1977&#39;, &#39;gdpPercap_1982&#39;, &#39;gdpPercap_1987&#39;,</span>
+<span class="go">       &#39;gdpPercap_1992&#39;, &#39;gdpPercap_1997&#39;, &#39;gdpPercap_2002&#39;, &#39;gdpPercap_2007&#39;],</span>
+<span class="go">      dtype=&#39;object&#39;)</span>
+</pre></div>
+</div>
+</section>
+<section id="use-dataframe-t-to-transpose-a-dataframe">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.T</span></code> to transpose a dataframe.<a class="headerlink" href="#use-dataframe-t-to-transpose-a-dataframe" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Sometimes want to treat columns as rows and vice versa.</p></li>
+<li><p>Transpose (written <code class="docutils literal notranslate"><span class="pre">.T</span></code>) doesn’t copy the data, just changes the program’s view of it.</p></li>
+<li><p>Like <code class="docutils literal notranslate"><span class="pre">columns</span></code>, it is a member variable.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data_oceania_country</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">country           Australia  New Zealand</span>
+<span class="go">gdpPercap_1952  10039.59564  10556.57566</span>
+<span class="go">gdpPercap_1957  10949.64959  12247.39532</span>
+<span class="go">gdpPercap_1962  12217.22686  13175.67800</span>
+<span class="go">gdpPercap_1967  14526.12465  14463.91893</span>
+<span class="go">gdpPercap_1972  16788.62948  16046.03728</span>
+<span class="go">gdpPercap_1977  18334.19751  16233.71770</span>
+<span class="go">gdpPercap_1982  19477.00928  17632.41040</span>
+<span class="go">gdpPercap_1987  21888.88903  19007.19129</span>
+<span class="go">gdpPercap_1992  23424.76683  18363.32494</span>
+<span class="go">gdpPercap_1997  26997.93657  21050.41377</span>
+<span class="go">gdpPercap_2002  30687.75473  23189.80135</span>
+<span class="go">gdpPercap_2007  34435.36744  25185.00911</span>
+</pre></div>
+</div>
+</section>
+<section id="use-dataframe-describe-to-get-summary-statistics-about-data">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.describe()</span></code> to get summary statistics about data.<a class="headerlink" href="#use-dataframe-describe-to-get-summary-statistics-about-data" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame.describe()</span></code> gets the summary statistics of only the columns that have numerical data.
+All other columns are ignored, unless you use the argument <code class="docutils literal notranslate"><span class="pre">include='all'</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data_oceania_country</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">       gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  gdpPercap_1967  \</span>
+<span class="go">count        2.000000        2.000000        2.000000        2.000000</span>
+<span class="go">mean     10298.085650    11598.522455    12696.452430    14495.021790</span>
+<span class="go">std        365.560078      917.644806      677.727301       43.986086</span>
+<span class="go">min      10039.595640    10949.649590    12217.226860    14463.918930</span>
+<span class="go">25%      10168.840645    11274.086022    12456.839645    14479.470360</span>
+<span class="go">50%      10298.085650    11598.522455    12696.452430    14495.021790</span>
+<span class="go">75%      10427.330655    11922.958888    12936.065215    14510.573220</span>
+<span class="go">max      10556.575660    12247.395320    13175.678000    14526.124650</span>
+
+<span class="go">       gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  gdpPercap_1987  \</span>
+<span class="go">count         2.00000        2.000000        2.000000        2.000000</span>
+<span class="go">mean      16417.33338    17283.957605    18554.709840    20448.040160</span>
+<span class="go">std         525.09198     1485.263517     1304.328377     2037.668013</span>
+<span class="go">min       16046.03728    16233.717700    17632.410400    19007.191290</span>
+<span class="go">25%       16231.68533    16758.837652    18093.560120    19727.615725</span>
+<span class="go">50%       16417.33338    17283.957605    18554.709840    20448.040160</span>
+<span class="go">75%       16602.98143    17809.077557    19015.859560    21168.464595</span>
+<span class="go">max       16788.62948    18334.197510    19477.009280    21888.889030</span>
+
+<span class="go">       gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007</span>
+<span class="go">count        2.000000        2.000000        2.000000        2.000000</span>
+<span class="go">mean     20894.045885    24024.175170    26938.778040    29810.188275</span>
+<span class="go">std       3578.979883     4205.533703     5301.853680     6540.991104</span>
+<span class="go">min      18363.324940    21050.413770    23189.801350    25185.009110</span>
+<span class="go">25%      19628.685413    22537.294470    25064.289695    27497.598692</span>
+<span class="go">50%      20894.045885    24024.175170    26938.778040    29810.188275</span>
+<span class="go">75%      22159.406358    25511.055870    28813.266385    32122.777857</span>
+<span class="go">max      23424.766830    26997.936570    30687.754730    34435.367440</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Not particularly useful with just two records,
+but very helpful when there are thousands.</p></li>
+</ul>
+<div class="challenge docutils">
+<h2 class="rubric" id="reading-other-data">Reading Other Data</h2>
+<p>Read the data in <code class="docutils literal notranslate"><span class="pre">gapminder_gdp_americas.csv</span></code>
+(which should be in the same directory as <code class="docutils literal notranslate"><span class="pre">gapminder_gdp_oceania.csv</span></code>)
+into a variable called <code class="docutils literal notranslate"><span class="pre">data_americas</span></code>
+and display its summary statistics.</p>
+<div class="solution docutils">
+<h2 class="rubric" id="solution">Solution</h2>
+<p>To read in a CSV, we use <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code> and pass the filename <code class="docutils literal notranslate"><span class="pre">'data/gapminder_gdp_americas.csv'</span></code> to it.
+We also once again pass the column name <code class="docutils literal notranslate"><span class="pre">'country'</span></code> to the parameter <code class="docutils literal notranslate"><span class="pre">index_col</span></code> in order to index by country.
+The summary statistics can be displayed with the <code class="docutils literal notranslate"><span class="pre">DataFrame.describe()</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_americas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_americas.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="n">data_americas</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="inspecting-data">Inspecting Data</h2>
+<p>After reading the data for the Americas,
+use <code class="docutils literal notranslate"><span class="pre">help(data_americas.head)</span></code> and <code class="docutils literal notranslate"><span class="pre">help(data_americas.tail)</span></code>
+to find out what <code class="docutils literal notranslate"><span class="pre">DataFrame.head</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame.tail</span></code> do.</p>
+<ol class="arabic simple">
+<li><p>What method call will display the first three rows of this data?</p></li>
+<li><p>What method call will display the last three columns of this data?
+(Hint: you may need to change your view of the data.)</p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="id1">Solution</h2>
+<ol class="arabic simple">
+<li><p>We can check out the first five rows of <code class="docutils literal notranslate"><span class="pre">data_americas</span></code> by executing <code class="docutils literal notranslate"><span class="pre">data_americas.head()</span></code>
+which lets us view the beginning of the DataFrame. We can specify the number of rows we wish
+to see by specifying the parameter <code class="docutils literal notranslate"><span class="pre">n</span></code> in our call to <code class="docutils literal notranslate"><span class="pre">data_americas.head()</span></code>.
+To view the first three rows, execute:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_americas</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">          continent  gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  \</span>
+<span class="go">country</span>
+<span class="go">Argentina  Americas     5911.315053     6856.856212     7133.166023</span>
+<span class="go">Bolivia    Americas     2677.326347     2127.686326     2180.972546</span>
+<span class="go">Brazil     Americas     2108.944355     2487.365989     3336.585802</span>
+
+<span class="go">          gdpPercap_1967  gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  \</span>
+<span class="go">country</span>
+<span class="go">Argentina     8052.953021     9443.038526    10079.026740     8997.897412</span>
+<span class="go">Bolivia       2586.886053     2980.331339     3548.097832     3156.510452</span>
+<span class="go">Brazil        3429.864357     4985.711467     6660.118654     7030.835878</span>
+
+<span class="go">           gdpPercap_1987  gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  \</span>
+<span class="go">country</span>
+<span class="go">Argentina     9139.671389     9308.418710    10967.281950     8797.640716</span>
+<span class="go">Bolivia       2753.691490     2961.699694     3326.143191     3413.262690</span>
+<span class="go">Brazil        7807.095818     6950.283021     7957.980824     8131.212843</span>
+
+<span class="go">           gdpPercap_2007</span>
+<span class="go">country</span>
+<span class="go">Argentina    12779.379640</span>
+<span class="go">Bolivia       3822.137084</span>
+<span class="go">Brazil        9065.800825</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>To check out the last three rows of <code class="docutils literal notranslate"><span class="pre">data_americas</span></code>, we would use the command,
+<code class="docutils literal notranslate"><span class="pre">americas.tail(n=3)</span></code>, analogous to <code class="docutils literal notranslate"><span class="pre">head()</span></code> used above. However, here we want to look at
+the last three columns so we need to change our view and then use <code class="docutils literal notranslate"><span class="pre">tail()</span></code>. To do so, we
+create a new DataFrame in which rows and columns are switched:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">americas_flipped</span> <span class="o">=</span> <span class="n">data_americas</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<p>We can then view the last three columns of <code class="docutils literal notranslate"><span class="pre">americas</span></code> by viewing the last three rows
+of <code class="docutils literal notranslate"><span class="pre">americas_flipped</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">americas_flipped</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">country        Argentina  Bolivia   Brazil   Canada    Chile Colombia  \</span>
+<span class="go">gdpPercap_1997   10967.3  3326.14  7957.98  28954.9  10118.1  6117.36</span>
+<span class="go">gdpPercap_2002   8797.64  3413.26  8131.21    33329  10778.8  5755.26</span>
+<span class="go">gdpPercap_2007   12779.4  3822.14   9065.8  36319.2  13171.6  7006.58</span>
+
+<span class="go">country        Costa Rica     Cuba Dominican Republic  Ecuador    ...     \</span>
+<span class="go">gdpPercap_1997    6677.05  5431.99             3614.1  7429.46    ...</span>
+<span class="go">gdpPercap_2002    7723.45  6340.65            4563.81  5773.04    ...</span>
+<span class="go">gdpPercap_2007    9645.06   8948.1            6025.37  6873.26    ...</span>
+
+<span class="go">country          Mexico Nicaragua   Panama Paraguay     Peru Puerto Rico  \</span>
+<span class="go">gdpPercap_1997   9767.3   2253.02  7113.69   4247.4  5838.35     16999.4</span>
+<span class="go">gdpPercap_2002  10742.4   2474.55  7356.03  3783.67  5909.02     18855.6</span>
+<span class="go">gdpPercap_2007  11977.6   2749.32  9809.19  4172.84  7408.91     19328.7</span>
+
+<span class="go">country        Trinidad and Tobago United States  Uruguay Venezuela</span>
+<span class="go">gdpPercap_1997             8792.57       35767.4  9230.24   10165.5</span>
+<span class="go">gdpPercap_2002             11460.6       39097.1     7727   8605.05</span>
+<span class="go">gdpPercap_2007             18008.5       42951.7  10611.5   11415.8</span>
+</pre></div>
+</div>
+<p>This shows the data that we want, but we may prefer to display three columns instead of three rows,
+so we can flip it back:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">americas_flipped</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>    
+</pre></div>
+</div>
+<p><strong>Note:</strong> we could have done the above in a single line of code by ‘chaining’ the commands:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_americas</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="reading-files-in-other-directories">Reading Files in Other Directories</h2>
+<p>The data for your current project is stored in a file called <code class="docutils literal notranslate"><span class="pre">microbes.csv</span></code>,
+which is located in a folder called <code class="docutils literal notranslate"><span class="pre">field_data</span></code>.
+You are doing analysis in a notebook called <code class="docutils literal notranslate"><span class="pre">analysis.ipynb</span></code>
+in a sibling folder called <code class="docutils literal notranslate"><span class="pre">thesis</span></code>:</p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">your_home_directory</span>
+<span class="go">+-- field_data/</span>
+<span class="go">|   +-- microbes.csv</span>
+<span class="go">+-- thesis/</span>
+<span class="go">    +-- analysis.ipynb</span>
+</pre></div>
+</div>
+<p>What value(s) should you pass to <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> to read <code class="docutils literal notranslate"><span class="pre">microbes.csv</span></code> in <code class="docutils literal notranslate"><span class="pre">analysis.ipynb</span></code>?</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id2">Solution</h2>
+<p>We need to specify the path to the file of interest in the call to <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code>. We first need to ‘jump’ out of
+the folder <code class="docutils literal notranslate"><span class="pre">thesis</span></code> using ‘../’ and then into the folder <code class="docutils literal notranslate"><span class="pre">field_data</span></code> using ‘field_data/’. Then we can specify the filename `microbes.csv.
+The result is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_microbes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../field_data/microbes.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="writing-data">Writing Data</h2>
+<p>As well as the <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> function for reading data from a file,
+Pandas provides a <code class="docutils literal notranslate"><span class="pre">to_csv</span></code> function to write dataframes to files.
+Applying what you’ve learned about reading from files,
+write one of your dataframes to a file called <code class="docutils literal notranslate"><span class="pre">processed.csv</span></code>.
+You can use <code class="docutils literal notranslate"><span class="pre">help</span></code> to get information on how to use <code class="docutils literal notranslate"><span class="pre">to_csv</span></code>.</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id3">Solution</h2>
+<p>In order to write the DataFrame <code class="docutils literal notranslate"><span class="pre">data_americas</span></code> to a file called <code class="docutils literal notranslate"><span class="pre">processed.csv</span></code>, execute the following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_americas</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;processed.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For help on <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> or <code class="docutils literal notranslate"><span class="pre">to_csv</span></code>, you could execute, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">data_americas</span><span class="o">.</span><span class="n">to_csv</span><span class="p">)</span>
+<span class="n">help</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">help(to_csv)</span></code> or <code class="docutils literal notranslate"><span class="pre">help(pd.to_csv)</span></code> throws an error! This is due to the fact that <code class="docutils literal notranslate"><span class="pre">to_csv</span></code> is not a global Pandas function, but
+a member function of DataFrames. This means you can only call it on an instance of a DataFrame
+e.g., <code class="docutils literal notranslate"><span class="pre">data_americas.to_csv</span></code> or <code class="docutils literal notranslate"><span class="pre">data_oceania.to_csv</span></code></p>
+</div>
+</div>
+<div class="keypoints docutils">
+<ul class="simple">
+<li><p>Use the Pandas library to get basic statistics out of tabular data.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">index_col</span></code> to specify that a column’s values should be used as row headings.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.info</span></code> to find out more about a dataframe.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">DataFrame.columns</span></code> variable stores information about the dataframe’s columns.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.T</span></code> to transpose a dataframe.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">DataFrame.describe</span></code> to get summary statistics about data.</p></li>
+</ul>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="libraries.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Libraries</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="data_frames.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pandas DataFrames</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Reading Tabular Data into DataFrames</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-pandas-library-to-do-statistics-on-tabular-data">Use the Pandas library to do statistics on tabular data.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-index-col-to-specify-that-a-column-s-values-should-be-used-as-row-headings">Use <code class="docutils literal notranslate"><span class="pre">index_col</span></code> to specify that a column’s values should be used as row headings.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-dataframe-info-method-to-find-out-more-about-a-dataframe">Use the <code class="docutils literal notranslate"><span class="pre">DataFrame.info()</span></code> method to find out more about a dataframe.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dataframe-columns-variable-stores-information-about-the-dataframe-s-columns">The <code class="docutils literal notranslate"><span class="pre">DataFrame.columns</span></code> variable stores information about the dataframe’s columns.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-t-to-transpose-a-dataframe">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.T</span></code> to transpose a dataframe.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-dataframe-describe-to-get-summary-statistics-about-data">Use <code class="docutils literal notranslate"><span class="pre">DataFrame.describe()</span></code> to get summary statistics about data.</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Philosophers Who Code
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
