@@ -434,7 +434,10 @@ e.g., `data_americas.to_csv` or `data_oceania.to_csv`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: keypoints
+:::::::::::::::::::::::::::::::::::::::
+
+## keypoints
+
 
 - Use the Pandas library to get basic statistics out of tabular data.
 - Use `index_col` to specify that a column's values should be used as row headings.

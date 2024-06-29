@@ -412,7 +412,10 @@ unnecessary at the moment, but others are very simple and useful.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: keypoints
+:::::::::::::::::::::::::::::::::::::::
+
+## keypoints
+
 
 - Use comments to add documentation to programs.
 - A function may take zero or more arguments.

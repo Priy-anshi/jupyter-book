@@ -379,7 +379,10 @@ Whenever you are generating plots to go into a paper or a presentation, there ar
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: keypoints
+:::::::::::::::::::::::::::::::::::::::
+
+## keypoints
+
 
 - [`matplotlib`](https://matplotlib.org/) is the most widely used scientific plotting library in Python.
 - Plot data directly from a Pandas dataframe.

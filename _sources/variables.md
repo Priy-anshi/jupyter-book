@@ -406,7 +406,8 @@ What would these expressions return?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: keypoints
+:::::::::::::::::::::::::::::::::::::::
+## keypoints
 
 - Use variables to store values.
 - Use `print` to display values.

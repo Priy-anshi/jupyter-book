@@ -773,7 +773,10 @@ for the entire twentieth century?
 [numpy]: https://www.numpy.org/
 
 
-:::::::::::::::::::::::::::::::::::::::: keypoints
+:::::::::::::::::::::::::::::::::::::::
+
+## keypoints
+
 
 - Use `DataFrame.iloc[..., ...]` to select values by integer location.
 - Use `:` on its own to mean all columns or all rows.

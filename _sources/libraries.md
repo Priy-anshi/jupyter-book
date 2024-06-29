@@ -462,7 +462,10 @@ ValueError: math domain error
 [pep8-imports]: https://pep8.org/#imports
 
 
-:::::::::::::::::::::::::::::::::::::::: keypoints
+:::::::::::::::::::::::::::::::::::::::
+
+## keypoints
+
 
 - Most of the power of a programming language is in its libraries.
 - A program must import a library module in order to use it.

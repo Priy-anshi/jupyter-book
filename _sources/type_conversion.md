@@ -486,7 +486,8 @@ print(a_complex_number.imag)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: keypoints
+:::::::::::::::::::::::::::::::::::::::
+## keypoints
 
 - Every value has a type.
 - Use the built-in function `type` to find the type of a value.
