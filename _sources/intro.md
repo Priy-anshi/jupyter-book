@@ -1,11 +1,12 @@
-# Welcome to your Jupyter Book
+# Welcome to Intro to Python @Philosophers Who Code 
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+This is the custom welcome page for my Jupyter Book. Here you can provide an introduction or any relevant information you want visitors to see first.
 
-Check out the content pages bundled with this sample book to see more.
+## Table of Contents
+- Data Types and Type Conversion
+- Built-in Functions and Help
+- Libraries
+- Reading Tabular Data into DataFrames
+- Pandas DataFrames
+- Plotting
 
-```{tableofcontents}
-```
