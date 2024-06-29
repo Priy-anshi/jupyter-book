@@ -1,0 +1,896 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Variables and Assignment &#8212; Introduction to Data Analysis &amp; Plotting with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Markdown Files" href="markdown.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Introduction to Data Analysis & Plotting with Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Introduction to Data Analysis & Plotting with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Variables and Assignment
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mymarkdownfile.html">Variables and Assignment</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Variables and Assignment</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Variables and Assignment</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-variables-to-store-values">Use variables to store values.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-print-to-display-values">Use <code class="docutils literal notranslate"><span class="pre">print</span></code> to display values.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-must-be-created-before-they-are-used">Variables must be created before they are used.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-can-be-used-in-calculations">Variables can be used in calculations.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-an-index-to-get-a-single-character-from-a-string">Use an index to get a single character from a string.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-a-slice-to-get-a-substring">Use a slice to get a substring.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-function-len-to-find-the-length-of-a-string">Use the built-in function <code class="docutils literal notranslate"><span class="pre">len</span></code> to find the length of a string.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-case-sensitive">Python is case-sensitive.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-meaningful-variable-names">Use meaningful variable names.</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="variables-and-assignment">
+<h1>Variables and Assignment<a class="headerlink" href="#variables-and-assignment" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Write programs that assign scalar values to variables and perform calculations with those values.</p></li>
+<li><p>Correctly trace value changes in programs that use scalar assignment.</p></li>
+</ul>
+</div>
+<div class="question admonition">
+<p class="admonition-title">Questions</p>
+<ul class="simple">
+<li><p>How can I store data in programs?</p></li>
+</ul>
+</div>
+</section>
+<section id="use-variables-to-store-values">
+<h1>Use variables to store values.<a class="headerlink" href="#use-variables-to-store-values" title="Link to this heading">#</a></h1>
+<ul>
+<li><p><strong>Variables</strong> are names for values.</p></li>
+<li><p>Variable names</p>
+<ul class="simple">
+<li><p>can <strong>only</strong> contain letters, digits, and underscore <code class="docutils literal notranslate"><span class="pre">_</span></code> (typically used to separate words in long variable names)</p></li>
+<li><p>cannot start with a digit</p></li>
+<li><p>are <strong>case sensitive</strong> (age, Age and AGE are three different variables)</p></li>
+</ul>
+</li>
+<li><p>The name should also be meaningful so you or another programmer know what it is</p></li>
+<li><p>Variable names that start with underscores like <code class="docutils literal notranslate"><span class="pre">__alistairs_real_age</span></code> have a special meaning
+so we won’t do that until we understand the convention.</p></li>
+<li><p>In Python the <code class="docutils literal notranslate"><span class="pre">=</span></code> symbol assigns the value on the right to the name on the left.</p></li>
+<li><p>The variable is created when a value is assigned to it.</p></li>
+<li><p>Here, Python assigns an age to a variable <code class="docutils literal notranslate"><span class="pre">age</span></code>
+and a name in quotes to a variable <code class="docutils literal notranslate"><span class="pre">first_name</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">age</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;Ahmed&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="use-print-to-display-values">
+<h1>Use <code class="docutils literal notranslate"><span class="pre">print</span></code> to display values.<a class="headerlink" href="#use-print-to-display-values" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Python has a built-in function called <code class="docutils literal notranslate"><span class="pre">print</span></code> that prints things as text.</p></li>
+<li><p>Call the function (i.e., tell Python to run it) by using its name.</p></li>
+<li><p>Provide values to the function (i.e., the things to print) in parentheses.</p></li>
+<li><p>To add a string to the printout, wrap the string in single or double quotes.</p></li>
+<li><p>The values passed to the function are called <strong>arguments</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;years old&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Ahmed is 42 years old</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">print</span></code> automatically puts a single space between items to separate them.</p></li>
+<li><p>And wraps around to a new line at the end.</p></li>
+</ul>
+</section>
+<section id="variables-must-be-created-before-they-are-used">
+<h1>Variables must be created before they are used.<a class="headerlink" href="#variables-must-be-created-before-they-are-used" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>If a variable doesn’t exist yet, or if the name has been mis-spelled,
+Python reports an error. (Unlike some languages, which “guess” a default value.)</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">last_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-error notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+&lt;ipython-input-1-c1fbb4e96102&gt; in &lt;module&gt;()
+----&gt; 1 print(last_name)
+
+NameError: name &#39;last_name&#39; is not defined
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The last line of an error message is usually the most informative.</p></li>
+<li><p>We will look at error messages in detail <a class="reference internal" href="#17-scope.md#reading-error-messages"><span class="xref myst">later</span></a>.</p></li>
+</ul>
+<div class="callout docutils">
+<h2 class="rubric" id="variables-persist-between-cells">Variables Persist Between Cells</h2>
+<p>Be aware that it is the <em>order</em> of execution of cells that is important in a Jupyter notebook, not the order
+in which they appear. Python will remember <em>all</em> the code that was run previously, including any variables you have
+defined, irrespective of the order in the notebook. Therefore if you define variables lower down the notebook and then
+(re)run cells further up, those defined further down will still be present. As an example, create two cells with the
+following content, in this order:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">myval</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">myval</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>If you execute this in order, the first cell will give an error. However, if you run the first cell <em>after</em> the second
+cell it will print out <code class="docutils literal notranslate"><span class="pre">1</span></code>. To prevent confusion, it can be helpful to use the <code class="docutils literal notranslate"><span class="pre">Kernel</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Restart</span> <span class="pre">&amp;</span> <span class="pre">Run</span> <span class="pre">All</span></code> option which
+clears the interpreter and runs everything from a clean slate going top to bottom.</p>
+</div>
+</section>
+<section id="variables-can-be-used-in-calculations">
+<h1>Variables can be used in calculations.<a class="headerlink" href="#variables-can-be-used-in-calculations" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>We can use variables in calculations just as if they were values.</p>
+<ul>
+<li><p>Remember, we assigned the value <code class="docutils literal notranslate"><span class="pre">42</span></code> to <code class="docutils literal notranslate"><span class="pre">age</span></code> a few lines ago.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Age in three years:&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Age in three years: 45</span>
+</pre></div>
+</div>
+</section>
+<section id="use-an-index-to-get-a-single-character-from-a-string">
+<h1>Use an index to get a single character from a string.<a class="headerlink" href="#use-an-index-to-get-a-single-character-from-a-string" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The characters (individual letters, numbers, and so on) in a string are
+ordered. For example, the string <code class="docutils literal notranslate"><span class="pre">'AB'</span></code> is not the same as <code class="docutils literal notranslate"><span class="pre">'BA'</span></code>. Because of
+this ordering, we can treat the string as a list of characters.</p></li>
+<li><p>Each position in the string (first, second, etc.) is given a number. This
+number is called an <strong>index</strong> or sometimes a subscript.</p></li>
+<li><p>Indices are numbered from 0.</p></li>
+<li><p>Use the position’s index in square brackets to get the character at that
+position.</p></li>
+</ul>
+<p><img alt="A line of Python code, print(atomname[0]), demonstrates that using the zero index will output just the initial letter, in this case 'h' for helium." src="fig/2_indexing.svg" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atom_name</span> <span class="o">=</span> <span class="s1">&#39;helium&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">atom_name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">h</span>
+</pre></div>
+</div>
+</section>
+<section id="use-a-slice-to-get-a-substring">
+<h1>Use a slice to get a substring.<a class="headerlink" href="#use-a-slice-to-get-a-substring" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>A part of a string is called a <strong>substring</strong>. A substring can be as short as a
+single character.</p></li>
+<li><p>An item in a list is called an element. Whenever we treat a string as if it
+were a list, the string’s elements are its individual characters.</p></li>
+<li><p>A slice is a part of a string (or, more generally, a part of any list-like thing).</p></li>
+<li><p>We take a slice with the notation <code class="docutils literal notranslate"><span class="pre">[start:stop]</span></code>, where <code class="docutils literal notranslate"><span class="pre">start</span></code> is the integer
+index of the first element we want and <code class="docutils literal notranslate"><span class="pre">stop</span></code> is the integer index of
+the element <em>just after</em> the last element we want.</p></li>
+<li><p>The difference between <code class="docutils literal notranslate"><span class="pre">stop</span></code> and <code class="docutils literal notranslate"><span class="pre">start</span></code> is the slice’s length.</p></li>
+<li><p>Taking a slice does not change the contents of the original string. Instead,
+taking a slice returns a copy of part of the original string.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atom_name</span> <span class="o">=</span> <span class="s1">&#39;sodium&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">atom_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">sod</span>
+</pre></div>
+</div>
+</section>
+<section id="use-the-built-in-function-len-to-find-the-length-of-a-string">
+<h1>Use the built-in function <code class="docutils literal notranslate"><span class="pre">len</span></code> to find the length of a string.<a class="headerlink" href="#use-the-built-in-function-len-to-find-the-length-of-a-string" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;helium&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">6</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Nested functions are evaluated from the inside out,
+like in mathematics.</p></li>
+</ul>
+</section>
+<section id="python-is-case-sensitive">
+<h1>Python is case-sensitive.<a class="headerlink" href="#python-is-case-sensitive" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Python thinks that upper- and lower-case letters are different,
+so <code class="docutils literal notranslate"><span class="pre">Name</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code> are different variables.</p></li>
+<li><p>There are conventions for using upper-case letters at the start of variable names so we will use lower-case letters for now.</p></li>
+</ul>
+</section>
+<section id="use-meaningful-variable-names">
+<h1>Use meaningful variable names.<a class="headerlink" href="#use-meaningful-variable-names" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Python doesn’t care what you call variables as long as they obey the rules
+(alphanumeric characters and the underscore).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">flabadab</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">ewr_422_yY</span> <span class="o">=</span> <span class="s1">&#39;Ahmed&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ewr_422_yY</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="n">flabadab</span><span class="p">,</span> <span class="s1">&#39;years old&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Use meaningful variable names to help other people understand what the program does.</p></li>
+<li><p>The most important “other person” is your future self.</p></li>
+</ul>
+<div class="challenge docutils">
+<h2 class="rubric" id="swapping-values">Swapping Values</h2>
+<p>Fill the table showing the values of the variables in this program
+<em>after</em> each statement is executed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Command  # Value of x   # Value of y   # Value of swap #</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span>    <span class="c1">#              #              #               #</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mf">3.0</span>    <span class="c1">#              #              #               #</span>
+<span class="n">swap</span> <span class="o">=</span> <span class="n">x</span>   <span class="c1">#              #              #               #</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">y</span>      <span class="c1">#              #              #               #</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">swap</span>   <span class="c1">#              #              #               #</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="solution">Solution</h2>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go"># Command  # Value of x   # Value of y   # Value of swap #</span>
+<span class="go">x = 1.0    # 1.0          # not defined  # not defined   #</span>
+<span class="go">y = 3.0    # 1.0          # 3.0          # not defined   #</span>
+<span class="go">swap = x   # 1.0          # 3.0          # 1.0           #</span>
+<span class="go">x = y      # 3.0          # 3.0          # 1.0           #</span>
+<span class="go">y = swap   # 3.0          # 1.0          # 1.0           #</span>
+</pre></div>
+</div>
+<p>These three lines exchange the values in <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> using the <code class="docutils literal notranslate"><span class="pre">swap</span></code>
+variable for temporary storage. This is a fairly common programming idiom.</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="predicting-values">Predicting Values</h2>
+<p>What is the final value of <code class="docutils literal notranslate"><span class="pre">position</span></code> in the program below?
+(Try to predict the value without running the program,
+then check your prediction.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">initial</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span>
+<span class="n">position</span> <span class="o">=</span> <span class="n">initial</span>
+<span class="n">initial</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="id1">Solution</h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">left</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">initial</span></code> variable is assigned the value <code class="docutils literal notranslate"><span class="pre">'left'</span></code>.
+In the second line, the <code class="docutils literal notranslate"><span class="pre">position</span></code> variable also receives
+the string value <code class="docutils literal notranslate"><span class="pre">'left'</span></code>. In third line, the <code class="docutils literal notranslate"><span class="pre">initial</span></code> variable is given the
+value <code class="docutils literal notranslate"><span class="pre">'right'</span></code>, but the <code class="docutils literal notranslate"><span class="pre">position</span></code> variable retains its string value
+of <code class="docutils literal notranslate"><span class="pre">'left'</span></code>.</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="challenge">Challenge</h2>
+<p>If you assign <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">123</span></code>,
+what happens if you try to get the second digit of <code class="docutils literal notranslate"><span class="pre">a</span></code> via <code class="docutils literal notranslate"><span class="pre">a[1]</span></code>?</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id2">Solution</h2>
+<p>Numbers are not strings or sequences and Python will raise an error if you try to perform an index operation on a
+number. In the <a class="reference internal" href="#03-types-conversion.md"><span class="xref myst">next lesson on types and type conversion</span></a>
+we will learn more about types and how to convert between different types. If you want the Nth digit of a number you
+can convert it into a string using the <code class="docutils literal notranslate"><span class="pre">str</span></code> built-in function and then perform an index operation on that string.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-error notranslate"><div class="highlight"><pre><span></span>TypeError: &#39;int&#39; object is not subscriptable
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="choosing-a-name">Choosing a Name</h2>
+<p>Which is a better variable name, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code>, or <code class="docutils literal notranslate"><span class="pre">minutes</span></code>?
+Why?
+Hint: think about which code you would rather inherit
+from someone who is leaving the lab:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ts</span> <span class="pre">=</span> <span class="pre">m</span> <span class="pre">*</span> <span class="pre">60</span> <span class="pre">+</span> <span class="pre">s</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tot_sec</span> <span class="pre">=</span> <span class="pre">min</span> <span class="pre">*</span> <span class="pre">60</span> <span class="pre">+</span> <span class="pre">sec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">total_seconds</span> <span class="pre">=</span> <span class="pre">minutes</span> <span class="pre">*</span> <span class="pre">60</span> <span class="pre">+</span> <span class="pre">seconds</span></code></p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="id3">Solution</h2>
+<p><code class="docutils literal notranslate"><span class="pre">minutes</span></code> is better because <code class="docutils literal notranslate"><span class="pre">min</span></code> might mean something like “minimum”
+(and actually is an existing built-in function in Python that we will cover later).</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="slicing-practice">Slicing practice</h2>
+<p>What does the following program print?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atom_name</span> <span class="o">=</span> <span class="s1">&#39;carbon&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;atom_name[1:3] is:&#39;</span><span class="p">,</span> <span class="n">atom_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="id4">Solution</h2>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">atom_name[1:3] is: ar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="slicing-concepts">Slicing concepts</h2>
+<p>Given the following string:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species_name</span> <span class="o">=</span> <span class="s2">&quot;Acacia buxifolia&quot;</span>
+</pre></div>
+</div>
+<p>What would these expressions return?</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[2:8]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[11:]</span></code> (without a value after the colon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[:4]</span></code> (without a value before the colon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[:]</span></code> (just a colon)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[11:-3]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[-5:-3]</span></code></p></li>
+<li><p>What happens when you choose a <code class="docutils literal notranslate"><span class="pre">stop</span></code> value which is out of range? (i.e., try <code class="docutils literal notranslate"><span class="pre">species_name[0:20]</span></code> or <code class="docutils literal notranslate"><span class="pre">species_name[:103]</span></code>)</p></li>
+</ol>
+<div class="solution docutils">
+<h2 class="rubric" id="solutions">Solutions</h2>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[2:8]</span></code> returns the substring <code class="docutils literal notranslate"><span class="pre">'acia</span> <span class="pre">b'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[11:]</span></code> returns the substring <code class="docutils literal notranslate"><span class="pre">'folia'</span></code>, from position 11 until the end</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[:4]</span></code> returns the substring <code class="docutils literal notranslate"><span class="pre">'Acac'</span></code>, from the start up to but not including position 4</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[:]</span></code> returns the entire string <code class="docutils literal notranslate"><span class="pre">'Acacia</span> <span class="pre">buxifolia'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[11:-3]</span></code> returns the substring <code class="docutils literal notranslate"><span class="pre">'fo'</span></code>, from the 11th position to the third last position</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">species_name[-5:-3]</span></code> also returns the substring <code class="docutils literal notranslate"><span class="pre">'fo'</span></code>, from the fifth last position to the third last</p></li>
+<li><p>If a part of the slice is out of range, the operation does not fail. <code class="docutils literal notranslate"><span class="pre">species_name[0:20]</span></code> gives the same result as <code class="docutils literal notranslate"><span class="pre">species_name[0:]</span></code>, and <code class="docutils literal notranslate"><span class="pre">species_name[:103]</span></code> gives the same result as <code class="docutils literal notranslate"><span class="pre">species_name[:]</span></code></p></li>
+</ol>
+</div>
+</div>
+<div class="keypoints docutils">
+<ul class="simple">
+<li><p>Use variables to store values.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">print</span></code> to display values.</p></li>
+<li><p>Variables persist between cells.</p></li>
+<li><p>Variables must be created before they are used.</p></li>
+<li><p>Variables can be used in calculations.</p></li>
+<li><p>Use an index to get a single character from a string.</p></li>
+<li><p>Use a slice to get a substring.</p></li>
+<li><p>Use the built-in function <code class="docutils literal notranslate"><span class="pre">len</span></code> to find the length of a string.</p></li>
+<li><p>Python is case-sensitive.</p></li>
+<li><p>Use meaningful variable names.</p></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="markdown.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Markdown Files</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Variables and Assignment</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-variables-to-store-values">Use variables to store values.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-print-to-display-values">Use <code class="docutils literal notranslate"><span class="pre">print</span></code> to display values.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-must-be-created-before-they-are-used">Variables must be created before they are used.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-can-be-used-in-calculations">Variables can be used in calculations.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-an-index-to-get-a-single-character-from-a-string">Use an index to get a single character from a string.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-a-slice-to-get-a-substring">Use a slice to get a substring.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-function-len-to-find-the-length-of-a-string">Use the built-in function <code class="docutils literal notranslate"><span class="pre">len</span></code> to find the length of a string.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-case-sensitive">Python is case-sensitive.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-meaningful-variable-names">Use meaningful variable names.</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Philosophers Who Code
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
