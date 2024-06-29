@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>matplotlib is the most widely used scientific plotting library in Python. &#8212; Introduction to Data Analysis &amp; Plotting with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'plotting';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Use variables to store values." href="mymarkdownfile.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Introduction to Data Analysis & Plotting with Python - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Introduction to Data Analysis & Plotting with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Use variables to store values.
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mymarkdownfile.html">Use variables to store values.</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is the most widely used scientific plotting library in Python.</a></li>
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fplotting.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/plotting.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>matplotlib is the most widely used scientific plotting library in Python.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is the most widely used scientific plotting library in Python.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-data-directly-from-a-pandas-dataframe">Plot data directly from a <code class="docutils literal notranslate"><span class="pre">Pandas</span> <span class="pre">dataframe</span></code>.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#select-and-transform-data-then-plot-it">Select and transform data, then plot it.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#many-styles-of-plot-are-available">Many styles of plot are available.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-can-also-be-plotted-by-calling-the-matplotlib-plot-function-directly">Data can also be plotted by calling the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> <code class="docutils literal notranslate"><span class="pre">plot</span></code> function directly.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#get-australia-data-from-dataframe">Get Australia data from dataframe</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#can-plot-many-sets-of-data-together">Can plot many sets of data together.</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="objectives docutils">
+<ul class="simple">
+<li><p>Create a time series plot showing a single data set.</p></li>
+<li><p>Create a scatter plot showing relationship between two data sets.</p></li>
+</ul>
+</div>
+<div class="questions docutils">
+<ul class="simple">
+<li><p>How can I plot my data?</p></li>
+<li><p>How can I save my plot for publishing?</p></li>
+</ul>
+</div>
+<section id="matplotlib-is-the-most-widely-used-scientific-plotting-library-in-python">
+<h1><a class="reference external" href="https://matplotlib.org/"><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a> is the most widely used scientific plotting library in Python.<a class="headerlink" href="#matplotlib-is-the-most-widely-used-scientific-plotting-library-in-python" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Commonly use a sub-library called <a class="reference external" href="https://matplotlib.org/stable/tutorials/introductory/pyplot.html"><code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code></a>.</p></li>
+<li><p>The Jupyter Notebook will render plots inline by default.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Simple plots are then (fairly) simple to create.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (hr)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Position (km)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_simple_position_time_plot.svg" />{alt=’A line chart showing time (hr) relative to position (km), using the values provided in the code block above. By default, the plotted line is blue against a white background, and the axes have been scaled automatically to fit the range of the input data.’}</p>
+<div class="callout docutils">
+<h2 class="rubric" id="display-all-open-figures">Display All Open Figures</h2>
+<p>In our Jupyter Notebook example, running the cell should generate the figure directly below the code.
+The figure is also included in the Notebook document for future viewing.
+However, other Python environments like an interactive Python session started from a terminal
+or a Python script executed via the command line require an additional command to display the figure.</p>
+<p>Instruct <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to show a figure:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This command can also be used within a Notebook - for instance, to display multiple figures
+if several are created by a single cell.</p>
+</div>
+</section>
+<section id="plot-data-directly-from-a-pandas-dataframe">
+<h1>Plot data directly from a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html"><code class="docutils literal notranslate"><span class="pre">Pandas</span> <span class="pre">dataframe</span></code></a>.<a class="headerlink" href="#plot-data-directly-from-a-pandas-dataframe" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>We can also plot <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">Pandas dataframes</a>.</p></li>
+<li><p>Before plotting, we convert the column headings from a <code class="docutils literal notranslate"><span class="pre">string</span></code> to <code class="docutils literal notranslate"><span class="pre">integer</span></code> data type, since they represent numerical values,
+using <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.replace.html">str.replace()</a> to remove the <code class="docutils literal notranslate"><span class="pre">gpdPercap_</span></code>
+prefix and then <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.Series.astype.html">astype(int)</a>
+to convert the series of string values (<code class="docutils literal notranslate"><span class="pre">['1952',</span> <span class="pre">'1957',</span> <span class="pre">...,</span> <span class="pre">'2007']</span></code>) to a series of integers: <code class="docutils literal notranslate"><span class="pre">[1925,</span> <span class="pre">1957,</span> <span class="pre">...,</span> <span class="pre">2007]</span></code>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_oceania.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+
+<span class="c1"># Extract year from last 4 characters of each column name</span>
+<span class="c1"># The current column names are structured as &#39;gdpPercap_(year)&#39;, </span>
+<span class="c1"># so we want to keep the (year) part only for clarity when plotting GDP vs. years</span>
+<span class="c1"># To do this we use replace(), which removes from the string the characters stated in the argument</span>
+<span class="c1"># This method works on strings, so we use replace() from Pandas Series.str vectorized string functions</span>
+
+<span class="n">years</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;gdpPercap_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Convert year values to integers, saving results back to dataframe</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">years</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Australia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_gdp_australia.svg" />{alt=’GDP plot for Australia’}</p>
+</section>
+<section id="select-and-transform-data-then-plot-it">
+<h1>Select and transform data, then plot it.<a class="headerlink" href="#select-and-transform-data-then-plot-it" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>By default, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.plot.html#pandas.DataFrame.plot"><code class="docutils literal notranslate"><span class="pre">DataFrame.plot</span></code></a> plots with the rows as the X axis.</p></li>
+<li><p>We can transpose the data in order to plot multiple series.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;GDP per capita&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_gdp_australia_nz.svg" />{alt=’GDP plot for Australia and New Zealand’}</p>
+</section>
+<section id="many-styles-of-plot-are-available">
+<h1>Many styles of plot are available.<a class="headerlink" href="#many-styles-of-plot-are-available" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>For example, do a bar plot using a fancier style.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;GDP per capita&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_gdp_bar.svg" />{alt=’GDP barplot for Australia’}</p>
+</section>
+<section id="data-can-also-be-plotted-by-calling-the-matplotlib-plot-function-directly">
+<h1>Data can also be plotted by calling the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> <code class="docutils literal notranslate"><span class="pre">plot</span></code> function directly.<a class="headerlink" href="#data-can-also-be-plotted-by-calling-the-matplotlib-plot-function-directly" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The command is <code class="docutils literal notranslate"><span class="pre">plt.plot(x,</span> <span class="pre">y)</span></code></p></li>
+<li><p>The color and format of markers can also be specified as an additional optional argument e.g., <code class="docutils literal notranslate"><span class="pre">b-</span></code> is a blue line, <code class="docutils literal notranslate"><span class="pre">g--</span></code> is a green dashed line.</p></li>
+</ul>
+</section>
+<section id="get-australia-data-from-dataframe">
+<h1>Get Australia data from dataframe<a class="headerlink" href="#get-australia-data-from-dataframe" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">years</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">gdp_australia</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Australia&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">gdp_australia</span><span class="p">,</span> <span class="s1">&#39;g--&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_gdp_australia_formatted.svg" />{alt=’GDP formatted plot for Australia’}</p>
+</section>
+<section id="can-plot-many-sets-of-data-together">
+<h1>Can plot many sets of data together.<a class="headerlink" href="#can-plot-many-sets-of-data-together" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select two countries&#39; worth of data.</span>
+<span class="n">gdp_australia</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Australia&#39;</span><span class="p">]</span>
+<span class="n">gdp_nz</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;New Zealand&#39;</span><span class="p">]</span>
+
+<span class="c1"># Plot with differently-colored markers.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">gdp_australia</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Australia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">gdp_nz</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;New Zealand&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create legend.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;GDP per capita ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="callout docutils">
+<h2 class="rubric" id="adding-a-legend">Adding a Legend</h2>
+<p>Often when plotting multiple datasets on the same figure it is desirable to have
+a legend describing the data.</p>
+<p>This can be done in <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> in two stages:</p>
+<ul class="simple">
+<li><p>Provide a label for each dataset in the figure:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">gdp_australia</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Australia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">gdp_nz</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;New Zealand&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Instruct <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to create the legend.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>By default matplotlib will attempt to place the legend in a suitable position. If you
+would rather specify a position this can be done with the <code class="docutils literal notranslate"><span class="pre">loc=</span></code> argument, e.g to place
+the legend in the upper left corner of the plot, specify <code class="docutils literal notranslate"><span class="pre">loc='upper</span> <span class="pre">left'</span></code></p>
+</div>
+<p><img alt="" src="fig/9_gdp_australia_nz_formatted.svg" />{alt=’GDP formatted plot for Australia and New Zealand’}</p>
+<ul class="simple">
+<li><p>Plot a scatter plot correlating the GDP of Australia and New Zealand</p></li>
+<li><p>Use either <code class="docutils literal notranslate"><span class="pre">plt.scatter</span></code> or <code class="docutils literal notranslate"><span class="pre">DataFrame.plot.scatter</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">gdp_australia</span><span class="p">,</span> <span class="n">gdp_nz</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_gdp_correlation_plt.svg" />{alt=’GDP correlation using plt.scatter’}</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;New Zealand&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_gdp_correlation_data.svg" />{alt=’GDP correlation using data.T.plot.scatter’}</p>
+<div class="challenge docutils">
+<h2 class="rubric" id="minima-and-maxima">Minima and Maxima</h2>
+<p>Fill in the blanks below to plot the minimum GDP per capita over time
+for all the countries in Europe.
+Modify it again to plot the maximum GDP per capita over time for Europe.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_europe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_europe.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="n">data_europe</span><span class="o">.</span><span class="n">____</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+<span class="n">data_europe</span><span class="o">.</span><span class="n">____</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="solution">Solution</h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_europe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_europe.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="n">data_europe</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+<span class="n">data_europe</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_minima_maxima_solution.png" />{alt=’Minima Maxima Solution’}</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="correlations">Correlations</h2>
+<p>Modify the example in the notes to create a scatter plot showing
+the relationship between the minimum and maximum GDP per capita
+among the countries in Asia for each year in the data set.
+What relationship do you see (if any)?</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id1">Solution</h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_asia</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_asia.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="n">data_asia</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="fig/9_correlations_solution1.svg" />{alt=’Correlations Solution 1’}</p>
+<p>No particular correlations can be seen between the minimum and maximum gdp values
+year on year. It seems the fortunes of asian countries do not rise and fall together.</p>
+</div>
+<p>You might note that the variability in the maximum is much higher than
+that of the minimum.  Take a look at the maximum and the max indexes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_asia</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_gdp_asia.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="n">data_asia</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_asia</span><span class="o">.</span><span class="n">idxmax</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_asia</span><span class="o">.</span><span class="n">idxmin</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="solution docutils">
+<h2 class="rubric" id="id2">Solution</h2>
+<p><img alt="" src="fig/9_correlations_solution2.png" />{alt=’Correlations Solution 2’}</p>
+<p>Seems the variability in this value is due to a sharp drop after 1972.
+Some geopolitics at play perhaps? Given the dominance of oil producing countries,
+maybe the Brent crude index would make an interesting comparison?
+Whilst Myanmar consistently has the lowest gdp, the highest gdb nation has varied
+more notably.</p>
+</div>
+</div>
+<div class="challenge docutils">
+<h2 class="rubric" id="more-correlations">More Correlations</h2>
+<p>This short program creates a plot showing
+the correlation between GDP and life expectancy for 2007,
+normalizing marker size by population:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder_all.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="n">data_all</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap_2007&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp_2007&#39;</span><span class="p">,</span>
+              <span class="n">s</span><span class="o">=</span><span class="n">data_all</span><span class="p">[</span><span class="s1">&#39;pop_2007&#39;</span><span class="p">]</span><span class="o">/</span><span class="mf">1e6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using online help and other resources,
+explain what each argument to <code class="docutils literal notranslate"><span class="pre">plot</span></code> does.</p>
+<div class="solution docutils">
+<h2 class="rubric" id="id3">Solution</h2>
+<p><img alt="" src="fig/9_more_correlations_solution.svg" />{alt=’More Correlations Solution’}</p>
+<p>A good place to look is the documentation for the plot function -
+help(data_all.plot).</p>
+<p>kind - As seen already this determines the kind of plot to be drawn.</p>
+<p>x and y - A column name or index that determines what data will be
+placed on the x and y axes of the plot</p>
+<p>s - Details for this can be found in the documentation of plt.scatter.
+A single number or one value for each data point. Determines the size
+of the plotted points.</p>
+</div>
+</div>
+<div class="callout docutils">
+<h2 class="rubric" id="saving-your-plot-to-a-file">Saving your plot to a file</h2>
+<p>If you are satisfied with the plot you see you may want to save it to a file,
+perhaps to include it in a publication. There is a function in the
+matplotlib.pyplot module that accomplishes this:
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html">savefig</a>.
+Calling this function, e.g. with</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;my_figure.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will save the current figure to the file <code class="docutils literal notranslate"><span class="pre">my_figure.png</span></code>. The file format
+will automatically be deduced from the file name extension (other formats
+are pdf, ps, eps and svg).</p>
+<p>Note that functions in <code class="docutils literal notranslate"><span class="pre">plt</span></code> refer to a global figure variable
+and after a figure has been displayed to the screen (e.g. with <code class="docutils literal notranslate"><span class="pre">plt.show</span></code>)
+matplotlib will make this  variable refer to a new empty figure.
+Therefore, make sure you call <code class="docutils literal notranslate"><span class="pre">plt.savefig</span></code> before the plot is displayed to
+the screen, otherwise you may find a file with an empty plot.</p>
+<p>When using dataframes, data is often generated and plotted to screen in one line.
+In addition to using <code class="docutils literal notranslate"><span class="pre">plt.savefig</span></code>, we can save a reference to the current figure
+in a local variable (with <code class="docutils literal notranslate"><span class="pre">plt.gcf</span></code>) and call the <code class="docutils literal notranslate"><span class="pre">savefig</span></code> class method from
+that variable to save the figure to file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span> <span class="c1"># get current figure</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;my_figure.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="callout docutils">
+<h2 class="rubric" id="making-your-plots-accessible">Making your plots accessible</h2>
+<p>Whenever you are generating plots to go into a paper or a presentation, there are a few things you can do to make sure that everyone can understand your plots.</p>
+<ul class="simple">
+<li><p>Always make sure your text is large enough to read. Use the <code class="docutils literal notranslate"><span class="pre">fontsize</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">xlabel</span></code>, <code class="docutils literal notranslate"><span class="pre">ylabel</span></code>, <code class="docutils literal notranslate"><span class="pre">title</span></code>, and <code class="docutils literal notranslate"><span class="pre">legend</span></code>, and <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.tick_params.html"><code class="docutils literal notranslate"><span class="pre">tick_params</span></code> with <code class="docutils literal notranslate"><span class="pre">labelsize</span></code></a> to increase the text size of the numbers on your axes.</p></li>
+<li><p>Similarly, you should make your graph elements easy to see. Use <code class="docutils literal notranslate"><span class="pre">s</span></code> to increase the size of your scatterplot markers and <code class="docutils literal notranslate"><span class="pre">linewidth</span></code> to increase the sizes of your plot lines.</p></li>
+<li><p>Using color (and nothing else) to distinguish between different plot elements will make your plots unreadable to anyone who is colorblind, or who happens to have a black-and-white office printer. For lines, the <code class="docutils literal notranslate"><span class="pre">linestyle</span></code> parameter lets you use different types of lines. For scatterplots, <code class="docutils literal notranslate"><span class="pre">marker</span></code> lets you change the shape of your points. If you’re unsure about your colors, you can use <a class="reference external" href="https://www.color-blindness.com/coblis-color-blindness-simulator/">Coblis</a> or <a class="reference external" href="https://colororacle.org/">Color Oracle</a> to simulate what your plots would look like to those with colorblindness.</p></li>
+</ul>
+</div>
+<div class="keypoints docutils">
+<ul class="simple">
+<li><p><a class="reference external" href="https://matplotlib.org/"><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></a> is the most widely used scientific plotting library in Python.</p></li>
+<li><p>Plot data directly from a Pandas dataframe.</p></li>
+<li><p>Select and transform data, then plot it.</p></li>
+<li><p>Many styles of plot are available: see the <a class="reference external" href="https://python-graph-gallery.com/matplotlib/">Python Graph Gallery</a> for more options.</p></li>
+<li><p>Can plot many sets of data together.</p></li>
+</ul>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mymarkdownfile.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Use variables to store values.</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is the most widely used scientific plotting library in Python.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-data-directly-from-a-pandas-dataframe">Plot data directly from a <code class="docutils literal notranslate"><span class="pre">Pandas</span> <span class="pre">dataframe</span></code>.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#select-and-transform-data-then-plot-it">Select and transform data, then plot it.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#many-styles-of-plot-are-available">Many styles of plot are available.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-can-also-be-plotted-by-calling-the-matplotlib-plot-function-directly">Data can also be plotted by calling the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> <code class="docutils literal notranslate"><span class="pre">plot</span></code> function directly.</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#get-australia-data-from-dataframe">Get Australia data from dataframe</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#can-plot-many-sets-of-data-together">Can plot many sets of data together.</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Philosophers Who Code
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
