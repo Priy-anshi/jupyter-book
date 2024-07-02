@@ -394,7 +394,9 @@ what index expression will get the last character in the string `name`?
 
 `name[len(name) - 1]`
 
-
+:::{admonition} Click here!
+:class: tip, dropdown
+`name[len(name) - 1]`!
 
 :::::::::::::::::::::::::
 
